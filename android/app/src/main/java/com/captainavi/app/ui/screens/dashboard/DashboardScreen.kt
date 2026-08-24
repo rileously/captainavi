@@ -37,7 +37,6 @@ import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.HorizontalDivider
@@ -46,8 +45,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -60,7 +57,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.captainavi.app.CaptainAviApp
@@ -83,7 +79,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
     onNavigateToMap: () -> Unit,
@@ -96,7 +91,6 @@ fun DashboardScreen(
     val app = context.applicationContext as CaptainAviApp
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pullRefreshState = rememberPullToRefreshState()
 
     val voiceAlerts = remember { VoiceAlertManager(context) }
     DisposableEffect(Unit) {
@@ -125,18 +119,6 @@ fun DashboardScreen(
     }
     val voyageActive = activeTrip != null || telemetry.isTracking
     val voyageStartedAt = telemetry.tripStartTime.takeIf { it > 0L } ?: activeTrip?.startTime ?: 0L
-
-    if (pullRefreshState.isRefreshing) {
-        LaunchedEffect(Unit) {
-            if (telemetry.hasGpsFix) {
-                app.marineConditionsRepository.refresh(telemetry.latitude, telemetry.longitude, force = true)
-            }
-            if (isOnline) {
-                ConnectivitySyncWorker.enqueueImmediateSync(context)
-            }
-            pullRefreshState.endRefresh()
-        }
-    }
 
     var showSosDialog by remember { mutableStateOf(false) }
     var showNavDialog by remember { mutableStateOf(false) }
@@ -227,8 +209,7 @@ fun DashboardScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(colors.background)
-            .nestedScroll(pullRefreshState.nestedScrollConnection),
+            .background(colors.background),
     ) {
         Column(
             modifier = Modifier
@@ -592,11 +573,6 @@ fun DashboardScreen(
                 }
             }
         }
-
-        PullToRefreshContainer(
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter),
-        )
 
         SnackbarHost(
             hostState = snackbarHostState,

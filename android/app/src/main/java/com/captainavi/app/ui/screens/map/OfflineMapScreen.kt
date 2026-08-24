@@ -49,7 +49,9 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Sms
+import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material.icons.filled.Waves
+import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -207,12 +209,16 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
     var showDownloadDialog by remember { mutableStateOf(false) }
     var showDataInfo by remember { mutableStateOf(false) }
     var showFollowMeBoatsOverlay by rememberSaveable { mutableStateOf(false) }
+    var showFishingHotspots by rememberSaveable { mutableStateOf(false) }
+    var hotspotCells by remember { mutableStateOf<List<com.captainavi.app.data.repository.HotspotCell>>(emptyList()) }
+    var isLoadingHotspots by remember { mutableStateOf(false) }
     var selectedFollowMeBoat by remember { mutableStateOf<FollowMePublicBoat?>(null) }
     var followMeBoatChoices by remember { mutableStateOf<List<FollowMePublicBoat>>(emptyList()) }
     var selectedFollowMeProfile by remember { mutableStateOf<FollowMePublicBoatProfile?>(null) }
     var isLoadingFollowMeProfile by remember { mutableStateOf(false) }
     var followMeProfileError by remember { mutableStateOf<String?>(null) }
     var showMapSourcePicker by rememberSaveable { mutableStateOf(false) }
+    var showFleetRadar by rememberSaveable { mutableStateOf(false) }
     var showIslandSearch by rememberSaveable { mutableStateOf(false) }
     var islandQuery by rememberSaveable { mutableStateOf("") }
     var placeSearchFilter by rememberSaveable { mutableStateOf(PlaceSearchFilter.ALL) }
@@ -477,6 +483,15 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
     LaunchedEffect(rtlMarineRoutesEnabled, isOnline) {
         if (rtlMarineRoutesEnabled) app.rtlMarineRouteRepository.refresh()
     }
+    LaunchedEffect(showFishingHotspots) {
+        if (!showFishingHotspots || hotspotCells.isNotEmpty()) return@LaunchedEffect
+        isLoadingHotspots = true
+        val positions = app.tripRepository.getSlowSpeedPositions(
+            com.captainavi.app.data.repository.FishingHotspotAnalyzer.DEFAULT_MAX_SPEED_KNOTS,
+        )
+        hotspotCells = com.captainavi.app.data.repository.FishingHotspotAnalyzer.buildGrid(positions)
+        isLoadingHotspots = false
+    }
     LaunchedEffect(showFollowMeBoatsOverlay, isOnline) {
         if (!showFollowMeBoatsOverlay || !isOnline) return@LaunchedEffect
         while (true) {
@@ -673,6 +688,10 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                 mapRuntime.mapView?.invalidate()
             },
         )
+    }
+
+    if (showFleetRadar) {
+        FleetRadarDialog(onDismiss = { showFleetRadar = false })
     }
 
     if (showIslandSearch) {
@@ -1399,6 +1418,12 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                     }
                     mapRuntime.seamarkOverlay = seaMarkTiles
                     overlayManager.add(seaMarkTiles)
+                    val fishingHotspots = FishingHotspotOverlay(ctx).apply {
+                        cells = hotspotCells
+                        isEnabled = showFishingHotspots
+                    }
+                    mapRuntime.fishingHotspotOverlay = fishingHotspots
+                    overlayManager.add(fishingHotspots)
                     val rtlRoutes = RtlMarineRoutesOverlay(ctx).apply {
                         routes = rtlMarineRouteState.routes
                         isEnabled = rtlMarineRoutesEnabled
@@ -1588,6 +1613,10 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                     if (overlay.isEnabled != isSeamarkEnabled) {
                         overlay.isEnabled = isSeamarkEnabled
                     }
+                }
+                mapRuntime.fishingHotspotOverlay?.let { overlay ->
+                    overlay.cells = hotspotCells
+                    overlay.isEnabled = showFishingHotspots
                 }
                 mapRuntime.rtlMarineRoutesOverlay?.let { overlay ->
                     overlay.routes = rtlMarineRouteState.routes
@@ -1826,6 +1855,13 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                 Icon(Icons.Default.Layers, null)
             }
                 MapActionButton(
+                onClick = { showFleetRadar = true },
+                contentColor = colors.accent,
+                contentDescription = "Open fleet radar"
+            ) {
+                Icon(Icons.Default.TrackChanges, null)
+            }
+                MapActionButton(
                 onClick = { showMoreChartTools = !showMoreChartTools },
                 selected = showMoreChartTools,
                 selectedColor = colors.accent,
@@ -1920,6 +1956,22 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                     Icon(Icons.Default.DirectionsBoat, null)
                 }
                     MapActionButton(
+                    onClick = { showFishingHotspots = !showFishingHotspots },
+                    selected = showFishingHotspots,
+                    selectedColor = colors.caution,
+                    contentDescription = if (showFishingHotspots) {
+                        "Hide fishing hotspot heatmap from your trip history"
+                    } else {
+                        "Show fishing hotspot heatmap from your trip history"
+                    },
+                ) {
+                    if (isLoadingHotspots) {
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp, color = colors.caution)
+                    } else {
+                        Icon(Icons.Default.Whatshot, null)
+                    }
+                }
+                    MapActionButton(
                     onClick = { showDataInfo = true },
                     contentColor = colors.textSecondary,
                     contentDescription = "Marine data status",
@@ -1994,6 +2046,7 @@ private class MapRuntimeRefs {
     var marineActivityPointsOverlay: MarineActivityPointsOverlay? = null
     var islandLabelsOverlay: IslandLabelsOverlay? = null
     var followMePublicBoatsOverlay: FollowMePublicBoatsOverlay? = null
+    var fishingHotspotOverlay: FishingHotspotOverlay? = null
     var flowOverlay: MarineFlowOverlay? = null
     var fittedTraceTripId: String? = null
     var boatMarker: Marker? = null

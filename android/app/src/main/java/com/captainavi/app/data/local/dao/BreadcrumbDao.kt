@@ -7,6 +7,12 @@ import androidx.room.Query
 import com.captainavi.app.data.local.entity.BreadcrumbEntity
 import kotlinx.coroutines.flow.Flow
 
+/** Lightweight projection — avoids pulling every breadcrumb column when only position matters. */
+data class BreadcrumbPosition(
+    val latitude: Double,
+    val longitude: Double,
+)
+
 @Dao
 interface BreadcrumbDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -35,4 +41,11 @@ interface BreadcrumbDao {
 
     @Query("SELECT AVG(speedKnots) FROM breadcrumbs WHERE tripId = :tripId")
     suspend fun getAvgSpeedForTrip(tripId: String): Double?
+
+    /**
+     * Positions recorded at or below [maxSpeedKnots] — drifting, trolling, or anchored,
+     * as opposed to transiting — across every trip. Feeds the fishing hotspot heatmap.
+     */
+    @Query("SELECT latitude, longitude FROM breadcrumbs WHERE speedKnots <= :maxSpeedKnots")
+    suspend fun getSlowSpeedPositions(maxSpeedKnots: Double): List<BreadcrumbPosition>
 }

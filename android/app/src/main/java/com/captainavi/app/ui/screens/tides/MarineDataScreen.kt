@@ -28,22 +28,21 @@ import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Waves
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,7 +56,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
@@ -79,12 +77,17 @@ import com.captainavi.app.marine.weatherCodeLabel
 import com.captainavi.app.safety.NauticalMath
 import com.captainavi.app.safety.StormAlertEvaluator
 import com.captainavi.app.service.MarineLocationService
+import com.captainavi.app.tides.FishingTimeAnalyzer
+import com.captainavi.app.tides.FishingWindow
 import com.captainavi.app.tides.TidePredictor
 import com.captainavi.app.ui.components.StormAlertBanner
+import com.captainavi.app.ui.theme.MarinePalette
 import com.captainavi.app.ui.theme.MarineTheme
 import com.captainavi.app.ui.screens.map.StreetTileSource
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.distinctUntilChanged
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -173,7 +176,6 @@ private fun MarineModeButton(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MarineForecastPanel(
     modifier: Modifier = Modifier,
@@ -187,7 +189,13 @@ private fun MarineForecastPanel(
     val islandState by app.islandGazetteerRepository.state.collectAsState()
     val isOnline by app.networkMonitor.isOnline.collectAsState()
     val scope = rememberCoroutineScope()
-    val pullRefreshState = rememberPullToRefreshState()
+    var nowTick by remember { mutableLongStateOf(System.currentTimeMillis()) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            nowTick = System.currentTimeMillis()
+            delay(60_000L)
+        }
+    }
     val stormAlertsEnabled by app.settingsRepository.stormAlertsEnabled.collectAsState()
     val stormWaveHeightThresholdMeters by app.settingsRepository.stormWaveHeightThresholdMeters.collectAsState()
     val stormWindGustThresholdKnots by app.settingsRepository.stormWindGustThresholdKnots.collectAsState()
@@ -220,13 +228,6 @@ private fun MarineForecastPanel(
             longitude = requestedLongitude,
             force = state.conditions?.hourlyForecast.isNullOrEmpty(),
         )
-    }
-
-    if (pullRefreshState.isRefreshing) {
-        LaunchedEffect(Unit) {
-            app.marineConditionsRepository.refresh(requestedLatitude, requestedLongitude, force = true)
-            pullRefreshState.endRefresh()
-        }
     }
 
     val conditions = state.conditions
@@ -316,17 +317,12 @@ private fun MarineForecastPanel(
         ?: selectedHours.firstOrNull()
         ?: conditions?.hourlyForecast?.firstOrNull()
 
-    Box(
+    Column(
         modifier = modifier
             .fillMaxSize()
-            .nestedScroll(pullRefreshState.nestedScrollConnection),
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 16.dp),
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = 16.dp),
-        ) {
             CurrentMarineOverview(
                 conditions = conditions,
                 selectedHour = selectedHour,
@@ -342,6 +338,12 @@ private fun MarineForecastPanel(
             stormAlert?.let { alert ->
                 StormAlertBanner(alert, modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp))
             }
+
+            BestFishingTimesCard(
+                todayForecast = conditions?.dailyForecast?.firstOrNull(),
+                nowMillis = nowTick,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
+            )
 
             Row(
                 modifier = Modifier
@@ -421,12 +423,121 @@ private fun MarineForecastPanel(
                 color = colors.textMuted,
                 style = MaterialTheme.typography.labelSmall,
             )
+    }
+}
+
+/**
+ * A transparent heuristic, not a guarantee — combines tide movement (biggest weight),
+ * dawn/dusk light, and moon phase (spring-tide proxy) into a 0-100 score, then surfaces
+ * the best contiguous windows over the next 24h. See [FishingTimeAnalyzer] for the
+ * actual scoring. Only uses *today's* sunrise/sunset — a window that runs past local
+ * midnight won't get a dawn bonus from tomorrow's sunrise.
+ */
+@Composable
+private fun BestFishingTimesCard(
+    todayForecast: MarineForecastDay?,
+    nowMillis: Long,
+    modifier: Modifier = Modifier,
+) {
+    val colors = MarineTheme.colors
+    val sunriseEpochMillis = remember(todayForecast?.sunrise) {
+        todayForecast?.sunrise?.let { raw ->
+            runCatching { LocalDateTime.parse(raw).atZone(MALDIVES_ZONE).toInstant().toEpochMilli() }.getOrNull()
         }
-        PullToRefreshContainer(
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter),
+    }
+    val sunsetEpochMillis = remember(todayForecast?.sunset) {
+        todayForecast?.sunset?.let { raw ->
+            runCatching { LocalDateTime.parse(raw).atZone(MALDIVES_ZONE).toInstant().toEpochMilli() }.getOrNull()
+        }
+    }
+    // Recomputed at most once a minute (nowMillis only ticks that often) — cheap either way.
+    val currentScore = remember(nowMillis / 60_000L, sunriseEpochMillis, sunsetEpochMillis) {
+        FishingTimeAnalyzer.scoreAt(nowMillis, sunriseEpochMillis, sunsetEpochMillis)
+    }
+    val windows = remember(nowMillis / 900_000L, sunriseEpochMillis, sunsetEpochMillis) {
+        FishingTimeAnalyzer.bestWindows(nowMillis, nowMillis + 24 * 3_600_000L, sunriseEpochMillis, sunsetEpochMillis)
+    }
+    val scoreColor = fishingScoreColor(currentScore.score, colors)
+
+    Column(
+        modifier = modifier
+            .background(colors.surface, RoundedCornerShape(16.dp))
+            .border(1.dp, colors.border, RoundedCornerShape(16.dp))
+            .padding(14.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.Schedule, contentDescription = null, tint = colors.accent, modifier = Modifier.size(19.dp))
+                Spacer(Modifier.width(8.dp))
+                Column {
+                    Text("BEST FISHING TIMES", style = MaterialTheme.typography.labelSmall, color = colors.textMuted)
+                    Text("Next 24h · tide, light & moon", style = MaterialTheme.typography.titleSmall, color = colors.textPrimary)
+                }
+            }
+            Column(horizontalAlignment = Alignment.End) {
+                Text("${currentScore.score}", style = MaterialTheme.typography.headlineSmall, color = scoreColor)
+                Text("now", style = MaterialTheme.typography.labelSmall, color = colors.textMuted)
+            }
+        }
+
+        if (windows.isEmpty()) {
+            Text(
+                "No standout windows in the next 24h — conditions look fairly flat.",
+                style = MaterialTheme.typography.bodySmall,
+                color = colors.textSecondary,
+            )
+        } else {
+            windows.take(3).forEach { window -> FishingWindowRow(window) }
+        }
+
+        Text(
+            "Heuristic only — tide movement, dawn/dusk light, and moon phase. Not a guarantee, and doesn't account for weather.",
+            style = MaterialTheme.typography.labelSmall,
+            color = colors.textMuted,
         )
     }
+}
+
+@Composable
+private fun FishingWindowRow(window: FishingWindow) {
+    val colors = MarineTheme.colors
+    val label = when {
+        window.peakScore >= 80 -> "Excellent"
+        window.peakScore >= 60 -> "Good"
+        else -> "Fair"
+    }
+    val color = fishingScoreColor(window.peakScore, colors)
+    val timeFmt = remember { DateTimeFormatter.ofPattern("HH:mm", Locale.US).withZone(MALDIVES_ZONE) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(colors.card, RoundedCornerShape(10.dp))
+            .padding(horizontal = 10.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                "${timeFmt.format(Instant.ofEpochMilli(window.startEpochMillis))}–${timeFmt.format(Instant.ofEpochMilli(window.endEpochMillis))}",
+                style = MaterialTheme.typography.titleSmall,
+                color = colors.textPrimary,
+            )
+            Text(window.reasons.joinToString(" · "), style = MaterialTheme.typography.labelSmall, color = colors.textMuted)
+        }
+        Text(label, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, color = color)
+    }
+}
+
+private fun fishingScoreColor(score: Int, colors: MarinePalette): Color = when {
+    score >= 80 -> colors.success
+    score >= 60 -> colors.caution
+    else -> colors.textSecondary
 }
 
 @Composable

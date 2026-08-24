@@ -1,6 +1,7 @@
 package com.captainavi.app.data.repository
 
 import com.captainavi.app.data.local.dao.BreadcrumbDao
+import com.captainavi.app.data.local.dao.BreadcrumbPosition
 import com.captainavi.app.data.local.dao.TripDao
 import com.captainavi.app.data.local.entity.BreadcrumbEntity
 import com.captainavi.app.data.local.entity.TripEntity
@@ -21,6 +22,10 @@ class TripRepository(
 
     fun getBreadcrumbsForTrip(tripId: String): Flow<List<BreadcrumbEntity>> =
         breadcrumbDao.getBreadcrumbsForTrip(tripId)
+
+    /** Positions across every past trip recorded at/below [maxSpeedKnots] — feeds the fishing hotspot heatmap. */
+    suspend fun getSlowSpeedPositions(maxSpeedKnots: Double): List<BreadcrumbPosition> =
+        breadcrumbDao.getSlowSpeedPositions(maxSpeedKnots)
 
     suspend fun startTrip(startLat: Double, startLon: Double, notes: String = ""): TripEntity {
         val trip = TripEntity(
