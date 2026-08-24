@@ -1,0 +1,16 @@
+Captain Avi bundled reef-boundary awareness dataset
+
+Source: OneMap Reef Dataset, Maldives Land and Survey Authority
+Download: https://readme.onemap.mv/Datashare/Reefs.rar
+Source archive last modified: 2025-12-24
+Packaged for offline use: 2026-08-21
+License: https://readme.onemap.mv/pdf/Data%20Usage%20License.pdf
+Required attribution: Contains information licensed under Data Usage License – Maldives Land and Survey Authority.
+
+The source polygons were transformed from WGS 84 / UTM zone 43N (EPSG:32643)
+to WGS 84 longitude/latitude and quantized to one-millionth of a degree. Polygon
+topology, including the source dataset's holes and multipart features, is retained.
+
+These reef boundaries are for situational awareness only. They contain no surveyed
+soundings, safety contours, chart datum, under-keel clearance, or Notices to
+Mariners corrections and must not be used as a substitute for official nautical charts.

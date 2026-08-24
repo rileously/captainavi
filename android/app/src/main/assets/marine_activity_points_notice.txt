@@ -1,0 +1,28 @@
+CaptainAvi Maldives Fishing and Dive Points
+Snapshot: 2026-08-22
+
+Fishing points
+- 88 unique active Fish Aggregating Device (FAD) positions from the public Maldives Fisheries Information System.
+- Source: https://keyolhu.mv/home/fadlist
+- The Ministry of Fisheries and Ocean Resources links to this active-position map from https://fisheries.gov.mv/fad.
+- One duplicate active coordinate was collapsed in favor of the record containing a FAD station code.
+
+Dive points
+- 63 named physical dive-site nodes selected from the Geofabrik Maldives OpenStreetMap extract dated 2026-08-19.
+- 34 additional Maldives sites from OpenDiveMap after spatial/name deduplication.
+- OpenStreetMap source: https://download.geofabrik.de/asia/maldives.html
+- OpenDiveMap source: https://opendivemap.com
+- OpenStreetMap and OpenDiveMap data are provided under the Open Database License (ODbL): https://opendatacommons.org/licenses/odbl/
+- Attribution: OpenStreetMap contributors and OpenDiveMap contributors.
+- Dive centres, shops, snorkeling-only entries, unnamed points, and OSM records explicitly marked unverified were excluded.
+
+Nearby island and atoll labels
+- Derived from the Maldives OneMap official island registry maintained by the Geomatics Department.
+- Source: https://readme.onemap.mv/
+
+Safety and operational limits
+- FAD status and physical position can change; devices can drift, be damaged, or be removed. Recheck the official Fisheries list before a voyage.
+- A FAD point is not a promise of fish, a safe mooring, or an obstruction clearance position.
+- Dive-site coordinates and depth/entry metadata are community data and may be approximate, incomplete, or outdated.
+- Dive points do not establish present current, weather, visibility, depth, training, permit, or operator conditions.
+- These points are not official nautical-chart features. Use current official charts, Notices to Mariners, local authorities, and qualified local operators.

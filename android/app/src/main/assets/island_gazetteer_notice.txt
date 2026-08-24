@@ -1,0 +1,13 @@
+Maldives island names, categories, and centroid positions are derived from the
+public Maldives OneMap / Geomatics island registry layer island_20240509.
+
+Source endpoint:
+https://services7.arcgis.com/yvCbn3q8PPtPLZIM/arcgis/rest/services/island_20240509/FeatureServer/0
+
+Snapshot represented by the source layer name: 2024-05-09.
+This dataset is bundled so bilingual island labels and search remain available
+without an internet connection. Positions are reference centroids and are not
+surveyed navigation marks.
+
+Maldives OneMap data usage license:
+https://readme.onemap.mv/pdf/Data%20Usage%20License.pdf

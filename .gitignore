@@ -24,5 +24,13 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Python (android/tools build scripts)
+__pycache__/
+*.pyc
+
 # Scratch / QA output used during this session
 tmp/
+
+# AI tool caches / scratch, not project source
+.codex-remote-attachments/
+screenshot.png

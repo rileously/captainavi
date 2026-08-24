@@ -1,0 +1,8 @@
+name = "captain-avi-relay"
+main = "src/index.ts"
+compatibility_date = "2024-05-01"
+
+# Environment variables to set via: wrangler secret put <KEY>
+# TELEGRAM_BOT_TOKEN="your_telegram_bot_token"
+# TELEGRAM_CHAT_ID="your_family_group_chat_id"
+# API_SECRET_KEY="shared_secret_between_app_and_relay"

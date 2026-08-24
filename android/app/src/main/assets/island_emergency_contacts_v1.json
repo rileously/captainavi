@@ -1,0 +1,4173 @@
+{
+  "version": 1,
+  "snapshotDate": "2026-08-22",
+  "sources": [
+    {
+      "label": "Local Government Authority",
+      "url": "https://www.lga.gov.mv/en/councils?state=4"
+    },
+    {
+      "label": "Ministry of Health",
+      "url": "https://health.gov.mv/en/health-facilities"
+    },
+    {
+      "label": "Hanimaadhoo Council",
+      "url": "https://hanimaadhoo.gov.mv/contact"
+    },
+    {
+      "label": "Kulhudhuffushi Regional Hospital",
+      "url": "https://krh.gov.mv/"
+    }
+  ],
+  "count": 189,
+  "councilCount": 185,
+  "healthCount": 165,
+  "contacts": [
+    {
+      "islandId": 1442,
+      "islandName": "Hulhumalé",
+      "atoll": "MLE",
+      "council": {
+        "serviceLabel": "Mayor",
+        "organization": "Male' City Council",
+        "phones": [
+          "7794171"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1291,
+      "islandName": "Felidhoo",
+      "atoll": "Vaavu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "V. Felidhoo Council",
+        "phones": [
+          "6700720"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1292,
+      "islandName": "Keyodhoo",
+      "atoll": "Vaavu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "V. Keyodhoo Council",
+        "phones": [
+          "6700601"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Vaavu Keyodhoo Health Centre",
+        "phones": [
+          "6700029"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1302,
+      "islandName": "Rakeedhoo",
+      "atoll": "Vaavu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "V. Rakeedhoo Council",
+        "phones": [
+          "7776552"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Vaavu Rakeedhoo Health Centre",
+        "phones": [
+          "6700608"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 907,
+      "islandName": "Raiymandhoo",
+      "atoll": "Meemu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "M. Raiymandhoo Council",
+        "phones": [
+          "777777"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Meemu Raiymandhoo Health Centre",
+        "phones": [
+          "6720053"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 896,
+      "islandName": "Veyvah",
+      "atoll": "Meemu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "M. Veyvah Council",
+        "phones": [
+          "6720035"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Meemu Veyvah Health Centre",
+        "phones": [
+          "6720054"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 906,
+      "islandName": "Mulah",
+      "atoll": "Meemu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "M. Mulah Council",
+        "phones": [
+          "6720601"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Meemu Mulah Health Centre",
+        "phones": [
+          "6720592"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 868,
+      "islandName": "Muli",
+      "atoll": "Meemu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "M. Muli Council",
+        "phones": [
+          "7930049"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 879,
+      "islandName": "Naalaafushi",
+      "atoll": "Meemu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "M. Naalaafushi Council",
+        "phones": [
+          "6720034"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Meemu Naalaafushi Health Centre",
+        "phones": [
+          "6720010"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 904,
+      "islandName": "Kolhufushi",
+      "atoll": "Meemu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "M. Kolhufushi Council",
+        "phones": [
+          "6720606"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Meemu Kolhufushi Health Centre",
+        "phones": [
+          "6720532"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 859,
+      "islandName": "Dhiggaru",
+      "atoll": "Meemu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "M. Dhiggaru Council",
+        "phones": [
+          "6720031"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Meemu Dhiggaru Health Centre",
+        "phones": [
+          "6720596"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 895,
+      "islandName": "Maduvvari",
+      "atoll": "Meemu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "M. Maduvvari Council",
+        "phones": [
+          "6720032"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Meemu Maduvvari Health Centre",
+        "phones": [
+          "6720554"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 329,
+      "islandName": "Feeali",
+      "atoll": "Faafu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "F. Feeali Council",
+        "phones": [
+          "9120096"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Faafu Feeali Health Centre",
+        "phones": [
+          "7905168"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 318,
+      "islandName": "Bileiydhoo",
+      "atoll": "Faafu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "F. Bileiydhoo Council",
+        "phones": [
+          "6740013"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Faafu Bileiydhoo Health Centre",
+        "phones": [
+          "7902915"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 317,
+      "islandName": "Magoodhoo",
+      "atoll": "Faafu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "F. Magoodhoo Council",
+        "phones": [
+          "6740014"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Faafu Magoodhoo Health Centre",
+        "phones": [
+          "6740506"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 316,
+      "islandName": "Dharan'boodhoo",
+      "atoll": "Faafu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "F. Dharanboodhoo Council",
+        "phones": [
+          "7839997"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Faafu Dharan'boodhoo Health Centre",
+        "phones": [
+          "6740090"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 315,
+      "islandName": "Nilandhoo",
+      "atoll": "Faafu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "F. Nilandhoo Council",
+        "phones": [
+          "6740016"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 282,
+      "islandName": "Meedhoo",
+      "atoll": "Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Dh. Meedhoo Council",
+        "phones": [
+          "7225433"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Dhaalu Meedhoo Health Centre",
+        "phones": [
+          "6760644"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 245,
+      "islandName": "Ban'didhoo",
+      "atoll": "Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Dh. Bandidhoo Council",
+        "phones": [
+          "6760045"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Dhaalu Ban'didhoo Health Centre",
+        "phones": [
+          "6760535"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 254,
+      "islandName": "Rin'budhoo",
+      "atoll": "Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Dh. Rinbudhoo Council",
+        "phones": [
+          "7503474"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Dhaalu Rin'budhoo Health Centre",
+        "phones": [
+          "7904260"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1290,
+      "islandName": "Thinadhoo",
+      "atoll": "Vaavu",
+      "council": {
+        "serviceLabel": "Council Vice President",
+        "organization": "V. Thinadhoo Council",
+        "phones": [
+          "9737374"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Vaavu Thinadhoo Health Centre",
+        "phones": [
+          "6700605"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1286,
+      "islandName": "Fulidhoo",
+      "atoll": "Vaavu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "V. Fulidhoo Council",
+        "phones": [
+          "7797884"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Vaavu Fulidhoo Health Centre",
+        "phones": [
+          "6700039"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1552,
+      "islandName": "Maamigili",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "ADh. Maamigili Council",
+        "phones": [
+          "7824040"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Maamigili Health Centre",
+        "phones": [
+          "6680713"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 66,
+      "islandName": "Dhidhdhoo",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "ADh. Dhidhdhoo Council",
+        "phones": [
+          "9967152"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Dhidhdhoo Health Centre",
+        "phones": [
+          "6680855"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1380,
+      "islandName": "Hinmafushi",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "K. Himmafushi Council",
+        "phones": [
+          "7914868"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Kaafu Hinmafushi Health Centre",
+        "phones": [
+          "6640413"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1464,
+      "islandName": "Gulhi",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "K. Gulhi Council",
+        "phones": [
+          "7800875"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Kaafu Gulhi Health Centre",
+        "phones": [
+          "6640633"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1431,
+      "islandName": "Maafushi",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "K. Maafushi Council",
+        "phones": [
+          "6640073"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1427,
+      "islandName": "Guraidhoo",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "K. Guraidhoo Council",
+        "phones": [
+          "7957660"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Kaafu Guraidhoo Health Centre",
+        "phones": [
+          "6640405"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 16,
+      "islandName": "Thoddoo",
+      "atoll": "Alifu Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "AA. Thoddoo Council",
+        "phones": [
+          "9507367"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Alifu Thoddoo Health Centre",
+        "phones": [
+          "6660860"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 8,
+      "islandName": "Rasdhoo",
+      "atoll": "Alifu Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "AA. Rasdhoo Council",
+        "phones": [
+          "9717731"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 25,
+      "islandName": "Ukulhas",
+      "atoll": "Alifu Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "AA. Ukulhas Council",
+        "phones": [
+          "6660536"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Alifu Ukulhas Health Centre",
+        "phones": [
+          "6660859"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 15,
+      "islandName": "Bodufolhudhoo",
+      "atoll": "Alifu Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "AA. Bodufolhudhoo Council",
+        "phones": [
+          "6660657"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Alifu Bodufolhudhoo Health Centre",
+        "phones": [
+          "6660862"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 5,
+      "islandName": "Mathiveri",
+      "atoll": "Alifu Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "AA. Mathiveri Council",
+        "phones": [
+          "9665188"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Alifu Mathiveri Health Centre",
+        "phones": [
+          "6660858"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 267,
+      "islandName": "Hulhudheli",
+      "atoll": "Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Dh. Hulhudheli Council",
+        "phones": [
+          "6760049"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Dhaalu Hulhudheli Health Centre",
+        "phones": [
+          "6760647"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 9,
+      "islandName": "Feridhoo",
+      "atoll": "Alifu Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "AA. Feridhoo Council",
+        "phones": [
+          "7775797"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Alifu Feridhoo Health Centre",
+        "phones": [
+          "6660809"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 23,
+      "islandName": "Himandhoo",
+      "atoll": "Alifu Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "AA. Himandhoo Council",
+        "phones": [
+          "9993949"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Alifu Himandhoo Health Centre",
+        "phones": [
+          "6660857"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 90,
+      "islandName": "Hangnaameedhoo",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "ADh. Hangnaameedhoo Council",
+        "phones": [
+          "6680056"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Hangnaameedhoo Health Centre",
+        "phones": [
+          "6680870"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 47,
+      "islandName": "Omadhoo",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "ADh. Omadhoo Council",
+        "phones": [
+          "7914119"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Omadhoo Health Centre",
+        "phones": [
+          "6680873"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 74,
+      "islandName": "Kun'burudhoo",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "ADh. Kunburudhoo Council",
+        "phones": [
+          "7993773"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Kun'burudhoo Health Centre",
+        "phones": [
+          "6682810"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1531,
+      "islandName": "Mahibadhoo",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "ADh. Mahibadhoo Council",
+        "phones": [
+          "6680773"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 54,
+      "islandName": "Mandhoo",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "ADh. Mandhoo Council",
+        "phones": [
+          "7902986"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Mandhoo Health Centre",
+        "phones": [
+          "6680856"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 60,
+      "islandName": "Dhan'gethi",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "ADh. Dhangethi Council",
+        "phones": [
+          "6680888"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Dhan'gethi Health Centre",
+        "phones": [
+          "6680875"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 78,
+      "islandName": "Dhigurah",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "ADh. Dhigurah Council",
+        "phones": [
+          "7905277"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Dhigurah Health Centre",
+        "phones": [
+          "6680876"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 68,
+      "islandName": "Fenfushi",
+      "atoll": "Alifu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "ADh. Fenfushi Council",
+        "phones": [
+          "7927303"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Dhaalu Fenfushi Health Centre",
+        "phones": [
+          "6680874"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1,
+      "islandName": "Maalhos",
+      "atoll": "Alifu Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "AA. Maalhos Council",
+        "phones": [
+          "6660059"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Alifu Alifu Maalhos Health Centre",
+        "phones": [
+          "6660863"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 251,
+      "islandName": "Maaen'boodhoo",
+      "atoll": "Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Dh. Maaenboodoo Council",
+        "phones": [
+          "9738873"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Dhaalu Maaen'boodhoo Health Centre",
+        "phones": [
+          "6760645"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 260,
+      "islandName": "Kudahuvadhoo",
+      "atoll": "Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Dh. Kudahuvadhoo Council",
+        "phones": [
+          "6760522",
+          "6760667"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1222,
+      "islandName": "Buruni",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Th. Buruni Council",
+        "phones": [
+          "6780038"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Buruni Health Centre",
+        "phones": [
+          "6780554"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 429,
+      "islandName": "Vilin'gili",
+      "atoll": "Gaafu Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GA. Vilingili Council",
+        "phones": [
+          "7707067"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 413,
+      "islandName": "Nilandhoo",
+      "atoll": "Gaafu Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "GA. Nilandhoo Council",
+        "phones": [
+          "6820018"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Alifu Nilandhoo Health Centre",
+        "phones": [
+          "6824753"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 387,
+      "islandName": "Dhaandhoo",
+      "atoll": "Gaafu Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "GA. Dhaandhoo Council",
+        "phones": [
+          "6820026"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Alifu Dhaandhoo Health Centre",
+        "phones": [
+          "6820109"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 368,
+      "islandName": "Dhevvadhoo",
+      "atoll": "Gaafu Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "GA. Dhevvadhoo Council",
+        "phones": [
+          "6820023"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Alifu Dhevvadhoo Health Centre",
+        "phones": [
+          "6824754"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 369,
+      "islandName": "Kon'dey",
+      "atoll": "Gaafu Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "GA. Kondey Council",
+        "phones": [
+          "6820019",
+          "7930890"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Alifu Kon'dey Health Centre",
+        "phones": [
+          "6824658"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 415,
+      "islandName": "Gemanafushi",
+      "atoll": "Gaafu Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GA. Gemanafushi Council",
+        "phones": [
+          "9994420"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Alifu Gemanafushi Health Centre",
+        "phones": [
+          "6824755"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 399,
+      "islandName": "Kan'duhulhudhoo",
+      "atoll": "Gaafu Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "GA. Kanduhulhuhdoo Council",
+        "phones": [
+          "9992073"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Alifu Kan'duhulhudhoo Health Centre",
+        "phones": [
+          "6820115"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 607,
+      "islandName": "Madaveli",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GDh. Madaveli Council",
+        "phones": [
+          "9996453"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Dhaalu Madaveli Health Centre",
+        "phones": [
+          "6842614"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 483,
+      "islandName": "Hoan'dehdhoo",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "GDh. Hoadedhdhoo Council",
+        "phones": [
+          "6840015",
+          "9660015"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Dhaalu Hoan'dedhdhoo Health Centre",
+        "phones": [
+          "6842613"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 385,
+      "islandName": "Kolamaafushi",
+      "atoll": "Gaafu Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GA. Kolamaafushi Council",
+        "phones": [
+          "9999985"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Alifu Kolamaafushi Health Centre",
+        "phones": [
+          "6820048"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 545,
+      "islandName": "Nadellaa",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GDh. Nadella Council",
+        "phones": [
+          "7637010"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Dhaalu Nadellaa Health Centre",
+        "phones": [
+          "6842612"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 584,
+      "islandName": "Rathafandhoo",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GDh. Rathafandhoo Council",
+        "phones": [
+          "7668849"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Dhaalu Rathafandhoo Health Centre",
+        "phones": [
+          "6840095"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 510,
+      "islandName": "Vaadhoo",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GDh. Vaadhoo Council",
+        "phones": [
+          "9996708"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Dhaalu Vaadhoo Health Centre",
+        "phones": [
+          "6840094"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 550,
+      "islandName": "Fiyoaree",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "GDh. Fiyoaree Council",
+        "phones": [
+          "6840008",
+          "9992943"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Dhaalu Fiyoaree Health Centre",
+        "phones": [
+          "6840056"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 595,
+      "islandName": "Faresmaathodaa",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GDh. Faresmaathodaa Council",
+        "phones": [
+          "9991435"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Dhaalu Faresmaathodaa Health Centre",
+        "phones": [
+          "6840097"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 470,
+      "islandName": "Thinadhoo",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Thinadhoo City Council",
+        "phones": [
+          "6812596"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1560,
+      "islandName": "Addu Hulhudhoo",
+      "atoll": "Seenu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "S. Addu Hulhudhoo Council",
+        "phones": [
+          "7781048"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Seenu Hulhumeedhoo Health Centre",
+        "phones": [
+          "6890608"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1559,
+      "islandName": "Addu Meedhoo",
+      "atoll": "Seenu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "S. Addu Meedhoo Council",
+        "phones": [
+          "7948538"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Seenu Hulhumeedhoo Health Centre",
+        "phones": [
+          "6890608"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 662,
+      "islandName": "Hirimaradhoo",
+      "atoll": "Haa Dhaalu",
+      "council": null,
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Hirimaradhoo Health Centre",
+        "phones": [
+          "6520550"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1178,
+      "islandName": "Maroshi",
+      "atoll": "Shaviyani",
+      "council": null,
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Maroshi Health Centre",
+        "phones": [
+          "6540612"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 458,
+      "islandName": "Gadhdhoo",
+      "atoll": "Gaafu Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "GDh. Gadhdhoo Council",
+        "phones": [
+          "7996201"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Dhaalu Gadhdhoo Health Centre",
+        "phones": [
+          "6840171"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1372,
+      "islandName": "Huraa",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "K. Huraa Council",
+        "phones": [
+          "7781398"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Kaafu Huraa Health Centre",
+        "phones": [
+          "6640412"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 699,
+      "islandName": "Kunahandhoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "L. Kunahandhoo Council",
+        "phones": [
+          "7955667"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Kunahandhoo Health Centre",
+        "phones": [
+          "6800790"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 702,
+      "islandName": "Maamendhoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "L. Maamendhoo Council",
+        "phones": [
+          "6800705"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Maamendhoo Health Centre",
+        "phones": [
+          "6800772"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1229,
+      "islandName": "Vilufushi",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Th. Vilufushi Council",
+        "phones": [
+          "7687187"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Vilufushi Health Centre",
+        "phones": [
+          "6780043"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1281,
+      "islandName": "Madifushi",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Th. Madifushi Council",
+        "phones": [
+          "7707822"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Madifushi Health Centre",
+        "phones": [
+          "6780619"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1275,
+      "islandName": "Dhiyamigili",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Th. Dhiyamigili Council",
+        "phones": [
+          "7901204"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Dhiyamigili Health Centre",
+        "phones": [
+          "6780621"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1274,
+      "islandName": "Guraidhoo",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Th. Guraidhoo Council",
+        "phones": [
+          "7943476"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Guraidhoo Health Centre",
+        "phones": [
+          "6780078"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1218,
+      "islandName": "Kan'doodhoo",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Th. Kandoodhoo Council",
+        "phones": [
+          "6780036"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Kan'doodhoo Health Centre",
+        "phones": [
+          "6780020"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1212,
+      "islandName": "Vandhoo",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Th. Vandhoo Council",
+        "phones": [
+          "7980047"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Vandhoo Health Centre",
+        "phones": [
+          "6780045"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1234,
+      "islandName": "Hirilandhoo",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Th. Hirilandhoo Council",
+        "phones": [
+          "9690108"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Hirilandhoo Health Centre",
+        "phones": [
+          "6780532"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1254,
+      "islandName": "Gaadhiffushi",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Th. Gaadhiffushi Council",
+        "phones": [
+          "7471919"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Gaadhiffushi Health Centre",
+        "phones": [
+          "6780030"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1252,
+      "islandName": "Thimarafushi",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Th. Thimarafushi Council",
+        "phones": [
+          "7777375"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Thimarafushi Health Centre",
+        "phones": [
+          "6780503"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 697,
+      "islandName": "Hithadhoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "L. Hithadhoo Council",
+        "phones": [
+          "9646936"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Hithadhoo Health Centre",
+        "phones": [
+          "6800076"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1249,
+      "islandName": "Veymandoo",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Th. Veymandoo Council",
+        "phones": [
+          "6780083"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1242,
+      "islandName": "Omadhoo",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Th. Omadhoo Council",
+        "phones": [
+          "6780039"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Omadhoo Health Centre",
+        "phones": [
+          "6780626"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 723,
+      "islandName": "Isdhoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "L. Isdhoo Council",
+        "phones": [
+          "6800709"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Isdhoo Health Centre",
+        "phones": [
+          "6800552"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 753,
+      "islandName": "Dhan'bidhoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "L. Dhanbidhoo Council",
+        "phones": [
+          "6800724"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Dhan'bidhoo Health Centre",
+        "phones": [
+          "6800787"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 720,
+      "islandName": "Maabaidhoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "L. Maabaidhoo Council",
+        "phones": [
+          "6800708"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Maabaidhoo Health Centre",
+        "phones": [
+          "6800788"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 691,
+      "islandName": "Mundoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "L. Mundoo Council",
+        "phones": [
+          "6800714",
+          "7594859",
+          "7467123",
+          "7488212"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Mundoo Health Centre",
+        "phones": [
+          "6800793"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 746,
+      "islandName": "Kalaidhoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "L. Kalaidhoo Council",
+        "phones": [
+          "6800730"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 692,
+      "islandName": "Gan",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "L. Gan Council",
+        "phones": [
+          "6800766"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 717,
+      "islandName": "Maavah",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "L. Maavah Council",
+        "phones": [
+          "6800718"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Maavah Health Centre",
+        "phones": [
+          "6800075"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 704,
+      "islandName": "Fonadhoo",
+      "atoll": "Laamu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "L. Fonadhoo Council",
+        "phones": [
+          "9796368"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Laamu Fonadhoo Health Centre",
+        "phones": [
+          "6800789"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1280,
+      "islandName": "Kin'bidhoo",
+      "atoll": "Thaa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Th. Kinbidhoo Council",
+        "phones": [
+          "9199867"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Thaa Kin'bidhoo Health Centre",
+        "phones": [
+          "6780625"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 934,
+      "islandName": "Maalhendhoo",
+      "atoll": "Noonu",
+      "council": null,
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Maalhendhoo Health Centre",
+        "phones": [
+          "6560604"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1364,
+      "islandName": "Thulusdhoo",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "K. Thulusdhoo Council",
+        "phones": [
+          "6640183"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Kaafu Thulusdhoo Health Centre",
+        "phones": [
+          "6640090"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1339,
+      "islandName": "Gaafaru",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "K. Gaafaru Council",
+        "phones": [
+          "9833336"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Kaafu Gaafaru Health Centre",
+        "phones": [
+          "6640636"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 682,
+      "islandName": "Nolhivaranfaru",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HDh. Nolhivaranfaru Council",
+        "phones": [
+          "9558833"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Nolhivaranfaru Health Centre",
+        "phones": [
+          "6520509"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 661,
+      "islandName": "Nellaidhoo",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HDh. Nellaidhoo Council",
+        "phones": [
+          "6520041"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Nellaidhoo Health Centre",
+        "phones": [
+          "6520547"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 681,
+      "islandName": "Nolhivaran",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HDh. Nolhivaran Council",
+        "phones": [
+          "7939910"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Nolhivaran Health Centre",
+        "phones": [
+          "6520514"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 664,
+      "islandName": "Kurin'bi",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HDh. Kurinbee Council",
+        "phones": [
+          "6520036",
+          "9899668"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Kurin'bi Health Centre",
+        "phones": [
+          "6520549"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 680,
+      "islandName": "Kulhudhuffushi",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Kulhudhuffushi City Council",
+        "phones": [
+          "6528831"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Regional hospital",
+        "organization": "Kulhudhuffushi Regional Hospital",
+        "phones": [
+          "1401",
+          "6528864"
+        ],
+        "sourceLabel": "Kulhudhuffushi Regional Hospital",
+        "sourceUrl": "https://krh.gov.mv/"
+      }
+    },
+    {
+      "islandId": 670,
+      "islandName": "Kumundhoo",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HDh. Kumundhoo Council",
+        "phones": [
+          "7955574"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Kumundhoo Health Centre",
+        "phones": [
+          "6520542"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 672,
+      "islandName": "Neykurendhoo",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HDh. Neykurendhoo Council",
+        "phones": [
+          "9162323"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Neykurendhoo Health Centre",
+        "phones": [
+          "6520546"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 673,
+      "islandName": "Vaikaradhoo",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HDh. Vaikaradhoo Council",
+        "phones": [
+          "7905829"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Vaikaradhoo Health Centre",
+        "phones": [
+          "6520540"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 676,
+      "islandName": "Makunudhoo",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HDh. Makunudhoo Council",
+        "phones": [
+          "9964020"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Makunudhoo Health Centre",
+        "phones": [
+          "6520094"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1176,
+      "islandName": "Kan'ditheemu",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Sh. Kanditheemu Council",
+        "phones": [
+          "9953628"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Kan'ditheemu Health Centre",
+        "phones": [
+          "6540537"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1174,
+      "islandName": "Noomaraa",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Sh. Noomaraa Council",
+        "phones": [
+          "9931210"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Noomaraa Health Centre",
+        "phones": [
+          "6540666"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1169,
+      "islandName": "Goidhoo",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Sh. Goidhoo Council",
+        "phones": [
+          "9992183"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Goidhoo Health Centre",
+        "phones": [
+          "6540615"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1177,
+      "islandName": "Feydhoo",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Feydhoo Council",
+        "phones": [
+          "6540045"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Feydhoo Health Centre",
+        "phones": [
+          "6540611"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1189,
+      "islandName": "Feevah",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Sh. Feevah Council",
+        "phones": [
+          "9992966"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Feevah Health Centre",
+        "phones": [
+          "6540613"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1175,
+      "islandName": "Bileiyfahi",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Bileiyfahi Council",
+        "phones": [
+          "6540047"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Bileiyfahi Health Centre",
+        "phones": [
+          "6540503"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1166,
+      "islandName": "Foakaidhoo",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Foakaidhoo Council",
+        "phones": [
+          "6540048",
+          "9795353"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Foakaidhoo Health Centre",
+        "phones": [
+          "6540594"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1163,
+      "islandName": "Narudhoo",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Narudhoo Council",
+        "phones": [
+          "6540049",
+          "7411581"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Narudhoo Health Centre",
+        "phones": [
+          "6540050"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1173,
+      "islandName": "Lhaimagu",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Lhaimagu Council",
+        "phones": [
+          "6540051"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Lhaimagu Health Centre",
+        "phones": [
+          "6540614"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1192,
+      "islandName": "Komandoo",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Komandoo Council",
+        "phones": [
+          "6540027"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Komandoo Health Centre",
+        "phones": [
+          "6540091"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 655,
+      "islandName": "Naivaadhoo",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HDh. Naivaadhoo Council",
+        "phones": [
+          "6520039"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Naivaadhoo Health Centre",
+        "phones": [
+          "6520548"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 653,
+      "islandName": "Finey",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HDh. Finey Council",
+        "phones": [
+          "6520027"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Finey Health Centre",
+        "phones": [
+          "6520575"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 684,
+      "islandName": "Hanimaadhoo",
+      "atoll": "Haa Dhaalu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HDh. Hanimaadhoo Council",
+        "phones": [
+          "4002064"
+        ],
+        "sourceLabel": "Hanimaadhoo Council",
+        "sourceUrl": "https://hanimaadhoo.gov.mv/contact"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Dhaalu Hanimaadhoo Health Centre",
+        "phones": [
+          "6520083"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 640,
+      "islandName": "Baarah",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Baarah Council",
+        "phones": [
+          "6500016",
+          "6500171"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Amina Rehendhi Health Centre",
+        "phones": [
+          "6500570"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1443,
+      "islandName": "Malé",
+      "atoll": "MLE",
+      "council": {
+        "serviceLabel": "Mayor",
+        "organization": "Male' City Council",
+        "phones": [
+          "7794171"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1382,
+      "islandName": "Vilin'gili",
+      "atoll": "MLE",
+      "council": {
+        "serviceLabel": "Mayor",
+        "organization": "Male' City Council",
+        "phones": [
+          "7794171"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1129,
+      "islandName": "Feydhoo",
+      "atoll": "Seenu",
+      "council": {
+        "serviceLabel": "Mayor",
+        "organization": "Addu City Council",
+        "phones": [
+          "7775729"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Seenu Feydhoo Health Centre",
+        "phones": [
+          "6892021"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1152,
+      "islandName": "Hithadhoo",
+      "atoll": "Seenu",
+      "council": {
+        "serviceLabel": "Mayor",
+        "organization": "Addu City Council",
+        "phones": [
+          "7775729"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1131,
+      "islandName": "Maradhoo",
+      "atoll": "Seenu",
+      "council": {
+        "serviceLabel": "Mayor",
+        "organization": "Addu City Council",
+        "phones": [
+          "7775729"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Seenu Maradhoo Health Centre",
+        "phones": [
+          "6893023"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1130,
+      "islandName": "Maradhoofeydhoo",
+      "atoll": "Seenu",
+      "council": {
+        "serviceLabel": "Mayor",
+        "organization": "Addu City Council",
+        "phones": [
+          "7775729"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1334,
+      "islandName": "Fuvahmulah",
+      "atoll": "Gnaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Fuvammulah City Council",
+        "phones": [
+          "6860001",
+          "6865001"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 637,
+      "islandName": "Thuraakunu",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Thuraakunu Council",
+        "phones": [
+          "6500104"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Thuraakunu Health Centre",
+        "phones": [
+          "6500563"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 618,
+      "islandName": "Uligan",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HA. Uligan Council",
+        "phones": [
+          "7934946"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Uligan Health Centre",
+        "phones": [
+          "6500564"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1181,
+      "islandName": "Maaun'goodhoo",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Maaungoodhoo Council",
+        "phones": [
+          "6540056"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Maaun'goodhoo Health Centre",
+        "phones": [
+          "6540592"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 634,
+      "islandName": "Molhadhoo",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Molhadhoo Council",
+        "phones": [
+          "6500031"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Molhadhoo Health Centre",
+        "phones": [
+          "6500579"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 635,
+      "islandName": "Ihavandhoo",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HA. Ihavandhoo Council",
+        "phones": [
+          "9777544"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Amina Dhiyo Health Centre",
+        "phones": [
+          "6500501"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 624,
+      "islandName": "Kelaa",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Kelaa Council",
+        "phones": [
+          "6500027"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Kelaa Health Centre",
+        "phones": [
+          "6500047"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 611,
+      "islandName": "Vashafaru",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Vashafaru Council",
+        "phones": [
+          "6500039"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Vashafaru Health Centre",
+        "phones": [
+          "6500565"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 625,
+      "islandName": "Dhidhdhoo",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HA. Dhidhdhoo Council",
+        "phones": [
+          "9933099"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 641,
+      "islandName": "Filladhoo",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Filladhoo Council",
+        "phones": [
+          "6500023",
+          "7880747"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Filladhoo Health Centre",
+        "phones": [
+          "6500549"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 628,
+      "islandName": "Maarandhoo",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Maarandhoo Council",
+        "phones": [
+          "6500029",
+          "7390029"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Maarandhoo Health Centre",
+        "phones": [
+          "6500566"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 639,
+      "islandName": "Thakandhoo",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "HA. Thakandhoo Council",
+        "phones": [
+          "9797299"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Thakandhoo Health Centre",
+        "phones": [
+          "6500567"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 620,
+      "islandName": "Utheemu",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Utheemu Council",
+        "phones": [
+          "6500038"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Utheemu Health Centre",
+        "phones": [
+          "6500568"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 629,
+      "islandName": "Muraidhoo",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Muraidhoo Council",
+        "phones": [
+          "6500032"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Muraidhoo Health Centre",
+        "phones": [
+          "6500569"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 612,
+      "islandName": "Hoarafushi",
+      "atoll": "Haa Alifu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "HA. Hoarafushi Council",
+        "phones": [
+          "6500012"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Haa Alifu Hoarafushi Health Centre",
+        "phones": [
+          "6500064"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1171,
+      "islandName": "Funadhoo",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Funadhoo Council",
+        "phones": [
+          "540052"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1162,
+      "islandName": "Milandhoo",
+      "atoll": "Shaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Sh. Milandhoo Council",
+        "phones": [
+          "6540063"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Shaviyani Milandhoo Health Centre",
+        "phones": [
+          "6540519"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 972,
+      "islandName": "Hen'badhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "N. Henbadhoo Council",
+        "phones": [
+          "6560018"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Hen'badhoo Health Centre",
+        "phones": [
+          "6560025"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1062,
+      "islandName": "Hulhudhuffaaru",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "R. Hulhudhuffaaru Council",
+        "phones": [
+          "6580069"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Hulhudhuffaaru Health Centre",
+        "phones": [
+          "6580155"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1066,
+      "islandName": "Dhuvaafaru",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "R. Dhuvaafaru Council",
+        "phones": [
+          "6582701",
+          "7499914",
+          "7941791",
+          "9875815"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Dhuvaafaru Health Centre",
+        "phones": [
+          "6584525"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 133,
+      "islandName": "Kudarikilu",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Kudarikilu Council",
+        "phones": [
+          "7795757"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Kudarikilu Health Centre",
+        "phones": [
+          "6600052"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 168,
+      "islandName": "Kamadhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Kamadhoo Council",
+        "phones": [
+          "7949437"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Kamadhoo Health Centre",
+        "phones": [
+          "6601016"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 146,
+      "islandName": "Kendhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "B. Kendhoo Council",
+        "phones": [
+          "6600004"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Kendhoo Health Centre",
+        "phones": [
+          "6600029",
+          "6602577"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 174,
+      "islandName": "Kihaadhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Kihaadhoo Council",
+        "phones": [
+          "9121045"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Kihaadhoo Health Centre",
+        "phones": [
+          "6600050"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 185,
+      "islandName": "Dhonfan",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Dhonfanu Council",
+        "phones": [
+          "9690803"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Dhonfan Health Centre",
+        "phones": [
+          "6600021"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 188,
+      "islandName": "Dharavandhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "B. Dharavandhoo Council",
+        "phones": [
+          "6600002"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Dharavandhoo Health Centre",
+        "phones": [
+          "6600040"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 190,
+      "islandName": "Maalhos",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Maalhos Council",
+        "phones": [
+          "7773384"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Maalhos Health Centre",
+        "phones": [
+          "6601014"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1048,
+      "islandName": "Kinolhas",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "R. Kinolhas Council",
+        "phones": [
+          "6580073"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Kinolhas Health Centre",
+        "phones": [
+          "6580401"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 193,
+      "islandName": "Eydhafushi",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "B. Eydhafushi Council",
+        "phones": [
+          "6608303"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 200,
+      "islandName": "Hithaadhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Hithaadhoo Council",
+        "phones": [
+          "7949738"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Hithaadhoo Health Centre",
+        "phones": [
+          "6600037"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 227,
+      "islandName": "Fulhadhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Fulhadhoo Council",
+        "phones": [
+          "7968087"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Fulhadhoo Health Centre",
+        "phones": [
+          "6600070"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 221,
+      "islandName": "Fehendhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Fehendhoo Council",
+        "phones": [
+          "7931980"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Fehendhoo Health Centre",
+        "phones": [
+          "6600038"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 219,
+      "islandName": "Goidhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Goidhoo Council",
+        "phones": [
+          "9654313"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Goidhoo Health Centre",
+        "phones": [
+          "6600329"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 791,
+      "islandName": "Hinnavaru",
+      "atoll": "Lhaviyani",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Lh. Hinnavaru Council",
+        "phones": [
+          "7553369"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Lhaviyani Hinnavaru Health Centre",
+        "phones": [
+          "6620216"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 777,
+      "islandName": "Naifaru",
+      "atoll": "Lhaviyani",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Lh. Naifaru Council",
+        "phones": [
+          "7232307"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 798,
+      "islandName": "Kurendhoo",
+      "atoll": "Lhaviyani",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "Lh. Kurendhoo Council",
+        "phones": [
+          "6620001",
+          "9960463",
+          "7505591"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Lhaviyani Kurendhoo Health Centre",
+        "phones": [
+          "6620395"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 799,
+      "islandName": "Olhuvelifushi",
+      "atoll": "Lhaviyani",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "Lh. Olhuvelifushi Council",
+        "phones": [
+          "9110375"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Lhaviyani Olhuvelifushi Health Centre",
+        "phones": [
+          "6620399"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1338,
+      "islandName": "Kaashidhoo",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "K. Kaashidhoo Council",
+        "phones": [
+          "6645377"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Kaafu Kaashidhoo Health Centre",
+        "phones": [
+          "6640127"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 205,
+      "islandName": "Thulhaadhoo",
+      "atoll": "Baa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "B. Thulhaadhoo Council",
+        "phones": [
+          "7770753"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Baa Thulhaadhoo Health Centre",
+        "phones": [
+          "6600117"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1358,
+      "islandName": "Dhiffushi",
+      "atoll": "Kaafu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "K. Dhiffushi Council",
+        "phones": [
+          "6640071",
+          "9733613"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Kaafu Dhiffushi Health Centre",
+        "phones": [
+          "6640645"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1063,
+      "islandName": "Meedhoo",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "R. Meedhoo Council",
+        "phones": [
+          "9790799"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Meedhoo Health Centre",
+        "phones": [
+          "6580396"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1120,
+      "islandName": "In'guraidhoo",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "R. Inguraidhoo Council",
+        "phones": [
+          "9775153"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa In'guraidhoo Health Centre",
+        "phones": [
+          "6580395"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 966,
+      "islandName": "Ken'dhikulhudhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "N. Kendhikulhudhoo Council",
+        "phones": [
+          "9635096"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Ken'dhikulhudhoo Health Centre",
+        "phones": [
+          "6560092"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 944,
+      "islandName": "Kudafari",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "N. Kudafari Council",
+        "phones": [
+          "6560015"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Kudafari Health Centre",
+        "phones": [
+          "6560609"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 933,
+      "islandName": "Landhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "N. Landhoo Council",
+        "phones": [
+          "9861220"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Landhoo Health Centre",
+        "phones": [
+          "6560599"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 952,
+      "islandName": "Maafaru",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "N. Maafaru Council",
+        "phones": [
+          "9933342"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Maafaru Health Centre",
+        "phones": [
+          "6560603"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 949,
+      "islandName": "Lhohi",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "N. Lhohi Council",
+        "phones": [
+          "9850101"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Lhohi Health Centre",
+        "phones": [
+          "6560610"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 979,
+      "islandName": "Miladhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "N. Miladhoo Council",
+        "phones": [
+          "7507800"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Miladhoo Health Centre",
+        "phones": [
+          "6560611"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 970,
+      "islandName": "Magoodhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "N. Magoodhoo Council",
+        "phones": [
+          "9702227"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Magoodhoo Health Centre",
+        "phones": [
+          "6560042"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 945,
+      "islandName": "Manadhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "N. Manadhoo Council",
+        "phones": [
+          "6560029"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 988,
+      "islandName": "Holhudhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "N. Holhudhoo Council",
+        "phones": [
+          "6560009"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Holhudhoo Health Centre",
+        "phones": [
+          "6560520"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1070,
+      "islandName": "Fainu",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "R. Fainu Council",
+        "phones": [
+          "6580072"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Fainu Health Centre",
+        "phones": [
+          "6580400"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 941,
+      "islandName": "Fodhdhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "N. Fodhdhoo Council",
+        "phones": [
+          "7907933"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Fodhdhoo Health Centre",
+        "phones": [
+          "6560035"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1055,
+      "islandName": "Alifushi",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "R. Alifushi Council",
+        "phones": [
+          "9992692"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Alifushi Health Centre",
+        "phones": [
+          "6580217"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1073,
+      "islandName": "Vaadhoo",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "R. Vaadhoo Council",
+        "phones": [
+          "4000299"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Vaadhoo Health Centre",
+        "phones": [
+          "6580399"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1057,
+      "islandName": "Rasgetheemu",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "R. Rasgetheemu Council",
+        "phones": [
+          "6580068"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Rasgetheemu Health Centre",
+        "phones": [
+          "6580391"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1045,
+      "islandName": "An'golhitheemu",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "R. Angolhitheemu Council",
+        "phones": [
+          "7750001"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa An'golhitheemu Health Centre",
+        "phones": [
+          "6580402"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1075,
+      "islandName": "Un'goofaaru",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "R. Ungoofaaru Council",
+        "phones": [
+          "9881370"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": null
+    },
+    {
+      "islandId": 1046,
+      "islandName": "Maakurathu",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "R. Maakurathu Council",
+        "phones": [
+          "4009830"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Maakurathu Health Centre",
+        "phones": [
+          "6580392"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1027,
+      "islandName": "Rasmaadhoo",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "R. Rasmaadhoo Council",
+        "phones": [
+          "6580049"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Rasmaadhoo Health Centre",
+        "phones": [
+          "6580393"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1047,
+      "islandName": "Innamaadhoo",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "R. Innamaadhoo Council",
+        "phones": [
+          "7707173"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Innamaadhoo Health Centre",
+        "phones": [
+          "6580388"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 1012,
+      "islandName": "Maduvvari",
+      "atoll": "Raa",
+      "council": {
+        "serviceLabel": "Council President",
+        "organization": "R. Maduvvari Council",
+        "phones": [
+          "7942274"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Raa Maduvvari Health Centre",
+        "phones": [
+          "6580394"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 948,
+      "islandName": "Velidhoo",
+      "atoll": "Noonu",
+      "council": {
+        "serviceLabel": "Council office",
+        "organization": "N. Velidhoo Council",
+        "phones": [
+          "6560010",
+          "6560056"
+        ],
+        "sourceLabel": "Local Government Authority",
+        "sourceUrl": "https://www.lga.gov.mv/en/councils?state=4"
+      },
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Noonu Velidhoo Health Centre",
+        "phones": [
+          "6560526"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    },
+    {
+      "islandId": 412,
+      "islandName": "Maamendhoo",
+      "atoll": "Gaafu Alifu",
+      "council": null,
+      "health": {
+        "serviceLabel": "Health centre",
+        "organization": "Gaafu Alifu Maamendhoo Health Centre",
+        "phones": [
+          "6824752"
+        ],
+        "sourceLabel": "Ministry of Health",
+        "sourceUrl": "https://health.gov.mv/en/health-facilities"
+      }
+    }
+  ]
+}

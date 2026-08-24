@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Captain Avi</string>
+    <string name="notification_channel_name">Marine Safety Tracking</string>
+    <string name="notification_channel_desc">Shows active fishing trip speed, heading, and safety status</string>
+    <string name="alert_channel_name">Emergency &amp; Safety Alerts</string>
+    <string name="alert_channel_desc">High-priority alerts for SOS, low battery, and dangerous reefs</string>
+</resources>
