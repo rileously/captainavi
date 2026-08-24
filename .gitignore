@@ -1,0 +1,28 @@
+# Android / Gradle
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+android/*.iml
+android/.idea/
+android/captures/
+android/.externalNativeBuild/
+android/.cxx/
+*.keystore
+!debug.keystore
+
+# Node / relay (Cloudflare Worker)
+relay/node_modules/
+relay/.wrangler/
+relay/dist/
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Scratch / QA output used during this session
+tmp/
