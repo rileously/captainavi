@@ -30,11 +30,14 @@ import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Waves
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -54,6 +57,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
@@ -169,6 +173,7 @@ private fun MarineModeButton(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MarineForecastPanel(
     modifier: Modifier = Modifier,
@@ -182,6 +187,7 @@ private fun MarineForecastPanel(
     val islandState by app.islandGazetteerRepository.state.collectAsState()
     val isOnline by app.networkMonitor.isOnline.collectAsState()
     val scope = rememberCoroutineScope()
+    val pullRefreshState = rememberPullToRefreshState()
     val stormAlertsEnabled by app.settingsRepository.stormAlertsEnabled.collectAsState()
     val stormWaveHeightThresholdMeters by app.settingsRepository.stormWaveHeightThresholdMeters.collectAsState()
     val stormWindGustThresholdKnots by app.settingsRepository.stormWindGustThresholdKnots.collectAsState()
@@ -214,6 +220,13 @@ private fun MarineForecastPanel(
             longitude = requestedLongitude,
             force = state.conditions?.hourlyForecast.isNullOrEmpty(),
         )
+    }
+
+    if (pullRefreshState.isRefreshing) {
+        LaunchedEffect(Unit) {
+            app.marineConditionsRepository.refresh(requestedLatitude, requestedLongitude, force = true)
+            pullRefreshState.endRefresh()
+        }
     }
 
     val conditions = state.conditions
@@ -303,105 +316,115 @@ private fun MarineForecastPanel(
         ?: selectedHours.firstOrNull()
         ?: conditions?.hourlyForecast?.firstOrNull()
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(bottom = 16.dp),
+            .nestedScroll(pullRefreshState.nestedScrollConnection),
     ) {
-        CurrentMarineOverview(
-            conditions = conditions,
-            selectedHour = selectedHour,
-            latitude = forecastLatitude,
-            longitude = forecastLongitude,
-            locationName = forecastLocationName,
-            nearestLandDistanceNm = nearestIslandDistanceNm,
-            usingGps = telemetry.hasGpsFix,
-            isOnline = isOnline,
-            onOpenMap = onOpenMap,
-        )
-
-        stormAlert?.let { alert ->
-            StormAlertBanner(alert, modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp))
-        }
-
-        Row(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 16.dp),
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "7-DAY MARINE FORECAST",
-                    color = colors.textPrimary,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = when {
-                        state.errorMessage != null && conditions != null -> "Saved forecast · ${state.errorMessage}"
-                        state.errorMessage != null -> state.errorMessage.orEmpty()
-                        else -> "Open-Meteo best match · 3-hour steps"
-                    },
-                    color = if (state.errorMessage == null) colors.textMuted else colors.caution,
-                    style = MaterialTheme.typography.labelSmall,
-                    maxLines = 2,
-                )
+            CurrentMarineOverview(
+                conditions = conditions,
+                selectedHour = selectedHour,
+                latitude = forecastLatitude,
+                longitude = forecastLongitude,
+                locationName = forecastLocationName,
+                nearestLandDistanceNm = nearestIslandDistanceNm,
+                usingGps = telemetry.hasGpsFix,
+                isOnline = isOnline,
+                onOpenMap = onOpenMap,
+            )
+
+            stormAlert?.let { alert ->
+                StormAlertBanner(alert, modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp))
             }
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(26.dp),
-                    color = colors.accent,
-                    strokeWidth = 2.dp,
-                )
-            } else {
-                IconButton(
-                    onClick = {
-                        scope.launch {
-                            app.marineConditionsRepository.refresh(
-                                requestedLatitude,
-                                requestedLongitude,
-                                force = true,
-                            )
-                        }
-                    },
-                ) {
-                    Icon(Icons.Default.Refresh, contentDescription = "Refresh forecast", tint = colors.accent)
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "7-DAY MARINE FORECAST",
+                        color = colors.textPrimary,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text = when {
+                            state.errorMessage != null && conditions != null -> "Saved forecast · ${state.errorMessage}"
+                            state.errorMessage != null -> state.errorMessage.orEmpty()
+                            else -> "Open-Meteo best match · 3-hour steps"
+                        },
+                        color = if (state.errorMessage == null) colors.textMuted else colors.caution,
+                        style = MaterialTheme.typography.labelSmall,
+                        maxLines = 2,
+                    )
+                }
+                if (state.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(26.dp),
+                        color = colors.accent,
+                        strokeWidth = 2.dp,
+                    )
+                } else {
+                    IconButton(
+                        onClick = {
+                            scope.launch {
+                                app.marineConditionsRepository.refresh(
+                                    requestedLatitude,
+                                    requestedLongitude,
+                                    force = true,
+                                )
+                            }
+                        },
+                    ) {
+                        Icon(Icons.Default.Refresh, contentDescription = "Refresh forecast", tint = colors.accent)
+                    }
                 }
             }
-        }
 
-        if (days.isNotEmpty()) {
-            DaySelector(
-                days = days,
-                selectedDate = selectedDate,
-                onSelect = { selectedDate = it },
-            )
-        }
-
-        when {
-            conditions == null && state.isLoading -> ForecastMessage("Loading wind, waves and weather…")
-            conditions == null -> ForecastMessage("Forecast unavailable. Connect to the internet and refresh.", offline = true)
-            selectedHours.isEmpty() -> ForecastMessage("No hourly forecast is available for this day.", offline = true)
-            else -> {
-                ForecastGrid(
-                    hours = selectedHours,
-                    selectedHourTime = selectedHour?.time.orEmpty(),
-                    onSelectedHour = { selectedHourTime = it.time },
-                )
-                TideTrendCard(
-                    hours = selectedHours,
-                    selectedHourTime = selectedHour?.time.orEmpty(),
+            if (days.isNotEmpty()) {
+                DaySelector(
+                    days = days,
+                    selectedDate = selectedDate,
+                    onSelect = { selectedDate = it },
                 )
             }
-        }
 
-        Text(
-            text = "Forecast guidance only. Confirm local weather, tide tables, warnings and safe depth before departure.",
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-            color = colors.textMuted,
-            style = MaterialTheme.typography.labelSmall,
+            when {
+                conditions == null && state.isLoading -> ForecastMessage("Loading wind, waves and weather…")
+                conditions == null -> ForecastMessage("Forecast unavailable. Connect to the internet and refresh.", offline = true)
+                selectedHours.isEmpty() -> ForecastMessage("No hourly forecast is available for this day.", offline = true)
+                else -> {
+                    ForecastGrid(
+                        hours = selectedHours,
+                        selectedHourTime = selectedHour?.time.orEmpty(),
+                        onSelectedHour = { selectedHourTime = it.time },
+                    )
+                    TideTrendCard(
+                        hours = selectedHours,
+                        selectedHourTime = selectedHour?.time.orEmpty(),
+                    )
+                }
+            }
+
+            Text(
+                text = "Forecast guidance only. Confirm local weather, tide tables, warnings and safe depth before departure.",
+                modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                color = colors.textMuted,
+                style = MaterialTheme.typography.labelSmall,
+            )
+        }
+        PullToRefreshContainer(
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter),
         )
     }
 }

@@ -1,5 +1,11 @@
 package com.captainavi.app.ui.components
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,24 +37,44 @@ import java.util.Locale
  * Shared storm/high-wave alert banner used wherever marine conditions are shown
  * (Dashboard, Tides/Marine Data). Caution color + trending-up icon for a [StormAlertSeverity.WATCH]
  * (building toward the threshold); emergency color + warning icon once it's a
- * [StormAlertSeverity.WARNING] (already crossed).
+ * [StormAlertSeverity.WARNING] (already crossed) — which also gets a slow, subtle
+ * border/icon pulse so an already-rough forecast draws the eye without being alarming.
  */
 @Composable
 fun StormAlertBanner(alert: StormAlert, modifier: Modifier = Modifier) {
     val colors = MarineTheme.colors
-    val bannerColor = if (alert.severity == StormAlertSeverity.WARNING) colors.emergency else colors.caution
+    val isWarning = alert.severity == StormAlertSeverity.WARNING
+    val bannerColor = if (isWarning) colors.emergency else colors.caution
+
+    // Only a crossed threshold pulses; a WATCH stays static since it's a lower-key heads-up.
+    val emphasis = if (isWarning) {
+        val transition = rememberInfiniteTransition(label = "stormWarningPulse")
+        val pulse by transition.animateFloat(
+            initialValue = 0.55f,
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 900, easing = LinearEasing),
+                repeatMode = RepeatMode.Reverse,
+            ),
+            label = "stormWarningPulseAlpha",
+        )
+        pulse
+    } else {
+        0.75f
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(bannerColor.copy(alpha = 0.13f), RoundedCornerShape(10.dp))
-            .border(1.dp, bannerColor.copy(alpha = 0.75f), RoundedCornerShape(10.dp))
+            .background(bannerColor.copy(alpha = if (isWarning) emphasis * 0.16f else 0.13f), RoundedCornerShape(10.dp))
+            .border(1.dp, bannerColor.copy(alpha = emphasis), RoundedCornerShape(10.dp))
             .padding(10.dp),
         verticalAlignment = Alignment.Top,
     ) {
         Icon(
-            imageVector = if (alert.severity == StormAlertSeverity.WARNING) Icons.Default.Warning else Icons.AutoMirrored.Filled.TrendingUp,
+            imageVector = if (isWarning) Icons.Default.Warning else Icons.AutoMirrored.Filled.TrendingUp,
             contentDescription = null,
-            tint = bannerColor,
+            tint = if (isWarning) bannerColor.copy(alpha = emphasis) else bannerColor,
             modifier = Modifier.size(19.dp),
         )
         Spacer(Modifier.width(8.dp))
