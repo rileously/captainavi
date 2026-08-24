@@ -56,6 +56,7 @@ import com.captainavi.app.CaptainAviApp
 import com.captainavi.app.data.repository.SettingsRepository
 import com.captainavi.app.localization.Language
 import com.captainavi.app.localization.LanguageManager
+import com.captainavi.app.safety.FuelMarginCalculator
 import com.captainavi.app.safety.StormAlertEvaluator
 import com.captainavi.app.sms.OfflineSmsRules
 import com.captainavi.app.ui.components.ScreenHeader
@@ -90,6 +91,7 @@ fun SettingsScreen(
     val tripReferenceDistanceNm by settings.tripReferenceDistanceNm.collectAsState()
     val tripReferenceCostMvr by settings.tripReferenceCostMvr.collectAsState()
     val tripReferenceFuelLiters by settings.tripReferenceFuelLiters.collectAsState()
+    val fuelTankLiters by settings.fuelTankLiters.collectAsState()
     val reefWarningsEnabled by settings.reefWarningsEnabled.collectAsState()
     val reefWarningBufferMeters by settings.reefWarningBufferMeters.collectAsState()
     val stormAlertsEnabled by settings.stormAlertsEnabled.collectAsState()
@@ -112,6 +114,7 @@ fun SettingsScreen(
     var tripDistanceInput by remember(tripReferenceDistanceNm) { mutableStateOf(tripReferenceDistanceNm.toString()) }
     var tripCostInput by remember(tripReferenceCostMvr) { mutableStateOf(tripReferenceCostMvr.toString()) }
     var tripFuelInput by remember(tripReferenceFuelLiters) { mutableStateOf(tripReferenceFuelLiters.toString()) }
+    var fuelTankInput by remember(fuelTankLiters) { mutableStateOf(fuelTankLiters.toString()) }
     var reefWarningsInput by remember(reefWarningsEnabled) { mutableStateOf(reefWarningsEnabled) }
     var reefBufferInput by remember(reefWarningBufferMeters) { mutableStateOf(reefWarningBufferMeters.toString()) }
     var stormAlertsInput by remember(stormAlertsEnabled) { mutableStateOf(stormAlertsEnabled) }
@@ -413,8 +416,17 @@ fun SettingsScreen(
                         colors = fieldColors,
                     )
                 }
+                OutlinedTextField(
+                    value = fuelTankInput,
+                    onValueChange = { fuelTankInput = it.decimalCharactersOnly() },
+                    label = { Text("Fuel tank capacity (L)") },
+                    supportingText = { Text("Used for live return-margin warnings during a trip") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = fieldColors,
+                )
                 Text(
-                    text = "Default calibration: 11 NM = 1,000 MVR = 25 L. Estimates do not account for weather, load, currents, detours, or fuel reserve.",
+                    text = "Default calibration: 11 NM = 1,000 MVR = 25 L; tank ${FuelMarginCalculator.DEFAULT_TANK_LITERS.toInt()} L. Estimates do not account for weather, load, currents, detours, or fuel reserve.",
                     style = MaterialTheme.typography.bodySmall,
                     color = colors.caution,
                 )
@@ -517,12 +529,17 @@ fun SettingsScreen(
                 val referenceDistance = tripDistanceInput.toDoubleOrNull()
                 val referenceCost = tripCostInput.toDoubleOrNull()
                 val referenceFuel = tripFuelInput.toDoubleOrNull()
+                val tankLiters = fuelTankInput.toDoubleOrNull()
                 if (
                     referenceDistance == null || referenceDistance <= 0.0 ||
                     referenceCost == null || referenceCost < 0.0 ||
                     referenceFuel == null || referenceFuel < 0.0
                 ) {
                     saveToast = false to "Trip distance must be above zero; cost and petrol cannot be negative"
+                    return@Button
+                }
+                if (tankLiters == null || tankLiters <= 0.0) {
+                    saveToast = false to "Fuel tank capacity must be above zero"
                     return@Button
                 }
                 val smsConfigured = trustedSmsNumberInput.isNotBlank() || smsAutoReplyInput
@@ -554,6 +571,7 @@ fun SettingsScreen(
                     tripReferenceDistanceNm = referenceDistance,
                     tripReferenceCostMvr = referenceCost,
                     tripReferenceFuelLiters = referenceFuel,
+                    fuelTankLiters = tankLiters,
                     reefWarningsEnabled = reefWarningsInput,
                     reefWarningBufferMeters = reefBufferInput.toIntOrNull() ?: 300,
                     stormAlertsEnabled = stormAlertsInput,

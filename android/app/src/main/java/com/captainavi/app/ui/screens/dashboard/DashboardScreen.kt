@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.GpsFixed
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.PersonOff
 import androidx.compose.material.icons.filled.PlayArrow
@@ -66,6 +67,7 @@ import com.captainavi.app.data.remote.EndTripRequest
 import com.captainavi.app.data.remote.StartTripRequest
 import com.captainavi.app.localization.LanguageManager
 import com.captainavi.app.safety.AnchorWatchManager
+import com.captainavi.app.safety.FuelMarginCalculator
 import com.captainavi.app.safety.NauticalMath
 import com.captainavi.app.safety.StormAlertEvaluator
 import com.captainavi.app.safety.VoiceAlertManager
@@ -107,6 +109,7 @@ fun DashboardScreen(
     val stormAlertsEnabled by app.settingsRepository.stormAlertsEnabled.collectAsState()
     val stormWaveHeightThresholdMeters by app.settingsRepository.stormWaveHeightThresholdMeters.collectAsState()
     val stormWindGustThresholdKnots by app.settingsRepository.stormWindGustThresholdKnots.collectAsState()
+    val fuelTankLiters by app.settingsRepository.fuelTankLiters.collectAsState()
     val stormAlert = remember(
         marineConditionsState.conditions,
         stormAlertsEnabled,
@@ -332,6 +335,18 @@ fun DashboardScreen(
                 },
                 modifier = Modifier.clickable { onNavigateToMap() }
             )
+
+            if (telemetry.isTracking) {
+                telemetry.fuelMarginLiters?.let { marginLiters ->
+                    FuelMarginChip(
+                        marginLiters = marginLiters,
+                        remainingLiters = telemetry.fuelRemainingLiters,
+                        neededLiters = telemetry.fuelNeededToReturnLiters,
+                        tankLiters = fuelTankLiters,
+                        distanceTraveledNm = telemetry.distanceTraveledNm,
+                    )
+                }
+            }
 
             TideCard(
                 nowMillis = nowTick,
@@ -723,6 +738,83 @@ private fun VoyageStatusDock(
                 modifier = Modifier.weight(1f)
             )
         }
+    }
+}
+
+@Composable
+private fun FuelMarginChip(
+    marginLiters: Double,
+    remainingLiters: Double?,
+    neededLiters: Double?,
+    tankLiters: Double,
+    distanceTraveledNm: Double,
+) {
+    val colors = MarineTheme.colors
+    val warningThreshold = tankLiters * FuelMarginCalculator.WARNING_MARGIN_FRACTION
+    val tint = when {
+        marginLiters < 0.0 -> colors.emergency
+        marginLiters <= warningThreshold -> colors.caution
+        else -> colors.success
+    }
+    val statusLabel = when {
+        marginLiters < 0.0 -> "SHORT"
+        marginLiters <= warningThreshold -> "TIGHT"
+        else -> "OK"
+    }
+    val marginText = if (marginLiters < 0.0) {
+        String.format(java.util.Locale.US, "%.1f L short", -marginLiters)
+    } else {
+        String.format(java.util.Locale.US, "+%.1f L margin", marginLiters)
+    }
+    val detail = buildString {
+        remainingLiters?.let { append(String.format(java.util.Locale.US, "%.0f L left", it)) }
+        neededLiters?.let {
+            if (isNotEmpty()) append(" · ")
+            append(String.format(java.util.Locale.US, "%.0f L to home", it))
+        }
+        if (distanceTraveledNm > 0.05) {
+            if (isNotEmpty()) append(" · ")
+            append(String.format(java.util.Locale.US, "%.1f NM run", distanceTraveledNm))
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(tint.copy(alpha = 0.12f), RoundedCornerShape(12.dp))
+            .border(1.dp, tint.copy(alpha = 0.7f), RoundedCornerShape(12.dp))
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(36.dp)
+                .background(tint.copy(alpha = 0.2f), RoundedCornerShape(10.dp)),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                Icons.Default.LocalGasStation,
+                contentDescription = "Fuel margin",
+                tint = tint,
+                modifier = Modifier.size(20.dp),
+            )
+        }
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text("FUEL RETURN MARGIN", style = MaterialTheme.typography.labelSmall, color = tint)
+            Text(marginText, style = MaterialTheme.typography.titleMedium, color = colors.textPrimary)
+            if (detail.isNotEmpty()) {
+                Text(detail, style = MaterialTheme.typography.bodySmall, color = colors.textSecondary)
+            }
+        }
+        Text(
+            text = statusLabel,
+            style = MaterialTheme.typography.labelLarge,
+            color = tint,
+            modifier = Modifier
+                .background(tint.copy(alpha = 0.16f), RoundedCornerShape(50))
+                .padding(horizontal = 10.dp, vertical = 5.dp),
+        )
     }
 }
 

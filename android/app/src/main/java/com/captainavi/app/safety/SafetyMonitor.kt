@@ -66,6 +66,18 @@ sealed class SafetyAlertEvent(
             "GPS ACCURACY DEGRADED",
             "GPS signal is weak or obstructed. Move phone to clear sky."
         )
+
+    class LowFuelMargin(val marginLiters: Double, val remainingLiters: Double) :
+        SafetyAlertEvent(
+            AlertType.LOW_FUEL,
+            if (marginLiters < 0) "FUEL MAY NOT REACH HOME" else "LOW FUEL MARGIN",
+            if (marginLiters < 0) {
+                "Estimated fuel is about ${"%.1f".format(-marginLiters)} L short of a return trip. Head back now."
+            } else {
+                "About ${"%.1f".format(marginLiters)} L of fuel margin left after returning home. Consider heading back soon."
+            },
+            marginLiters < 0,
+        )
 }
 
 class SafetyMonitor(
@@ -80,6 +92,7 @@ class SafetyMonitor(
     private val alertedReefs = mutableSetOf<String>()
     private var officialReefAlertState: OfficialReefAlertState? = null
     private var lastGpsLostAlertTime: Long = 0L
+    private var isLowFuelAlerted: Boolean = false
 
     fun resetTripState() {
         lastMovementTime = System.currentTimeMillis()
@@ -88,6 +101,7 @@ class SafetyMonitor(
         alertedReefs.clear()
         officialReefAlertState = null
         lastGpsLostAlertTime = 0L
+        isLowFuelAlerted = false
     }
 
     suspend fun evaluateSafety(
@@ -101,6 +115,10 @@ class SafetyMonitor(
         stationaryMinutesThreshold: Int,
         reefWarningsEnabled: Boolean,
         reefWarningBufferMeters: Int,
+        fuelTankLiters: Double,
+        distanceTraveledNm: Double,
+        tripReferenceDistanceNm: Double,
+        tripReferenceFuelLiters: Double,
         onAlertTriggered: (SafetyAlertEvent) -> Unit
     ): SafetyEvaluationResult {
         val now = System.currentTimeMillis()
@@ -143,8 +161,9 @@ class SafetyMonitor(
 
         // 3. Check Distance to Home (Geofence safety boundary)
         val home = waypointRepository.getHomeWaypointCached()
+        var distToHome: Double? = null
         if (home != null) {
-            val distToHome = NauticalMath.distanceNauticalMiles(
+            distToHome = NauticalMath.distanceNauticalMiles(
                 latitude, longitude, home.latitude, home.longitude
             )
             if (distToHome > maxDistanceHomeNm && !isFarFromHomeAlerted) {
@@ -233,6 +252,33 @@ class SafetyMonitor(
                 onAlertTriggered(alert)
                 // Reset movement clock slightly so it doesn't fire every single second, but every 10 mins thereafter
                 lastMovementTime = now - (stationaryThresholdMillis - (10 * 60 * 1000L))
+            }
+        }
+
+        // 7. Check Fuel Margin — estimated from the trip cost/fuel calibration, not a
+        // fuel gauge. Only meaningful once a home point and a return distance are known.
+        val fuelResult = distToHome?.let { homeDistanceNm ->
+            FuelMarginCalculator.evaluate(
+                tankLiters = fuelTankLiters,
+                distanceTraveledNm = distanceTraveledNm,
+                distanceToHomeNm = homeDistanceNm,
+                referenceDistanceNm = tripReferenceDistanceNm,
+                referenceFuelLiters = tripReferenceFuelLiters,
+            )
+        }
+        if (fuelResult != null) {
+            val warningThreshold = fuelTankLiters * FuelMarginCalculator.WARNING_MARGIN_FRACTION
+            val recoveryThreshold = fuelTankLiters * FuelMarginCalculator.RECOVERY_MARGIN_FRACTION
+            if (fuelResult.marginLiters <= warningThreshold && !isLowFuelAlerted) {
+                isLowFuelAlerted = true
+                val alert = SafetyAlertEvent.LowFuelMargin(fuelResult.marginLiters, fuelResult.fuelRemainingLiters)
+                alarmManager.playWarningBeep(if (fuelResult.marginLiters < 0) 4 else 2)
+                outboxRepository.recordAlert(
+                    tripId, AlertType.LOW_FUEL, alert.description, latitude, longitude, batteryPct
+                )
+                onAlertTriggered(alert)
+            } else if (fuelResult.marginLiters > recoveryThreshold) {
+                isLowFuelAlerted = false
             }
         }
 

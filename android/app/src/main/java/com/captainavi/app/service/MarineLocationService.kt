@@ -25,6 +25,7 @@ import com.captainavi.app.data.local.entity.WaypointEntity
 import com.captainavi.app.safety.AdaptiveGpsIntervalPolicy
 import com.captainavi.app.safety.AnchorWatchManager
 import com.captainavi.app.safety.AudioAlarmManager
+import com.captainavi.app.safety.FuelMarginCalculator
 import com.captainavi.app.safety.GpsUpdateProfile
 import com.captainavi.app.safety.NauticalMath
 import com.captainavi.app.safety.SafetyAlertEvent
@@ -86,6 +87,11 @@ data class MarineTelemetry(
     // Home navigation
     val distanceToHomeNm: Double = 0.0,
     val bearingToHomeDegrees: Double = 0.0,
+    val distanceTraveledNm: Double = 0.0,
+    /** Estimated liters of fuel margin after a return-to-home trip; null when not underway or uncalibrated. */
+    val fuelMarginLiters: Double? = null,
+    val fuelRemainingLiters: Double? = null,
+    val fuelNeededToReturnLiters: Double? = null,
     // Active destination navigation
     val activeDestination: NavigationDestination? = null,
     val distToDestNm: Double = 0.0,
@@ -120,6 +126,11 @@ class MarineLocationService : Service() {
     private var lastSharedBreadcrumbTime: Long = 0L
     private var lastTraceLatitude: Double? = null
     private var lastTraceLongitude: Double? = null
+    // Continuous (every fix, not throttled to the breadcrumb interval) running total for
+    // the fuel-margin estimate — a coarser distance would understate fuel already burned.
+    private var lastFuelTrackLatitude: Double? = null
+    private var lastFuelTrackLongitude: Double? = null
+    private var tripDistanceTraveledNm: Double = 0.0
 
     private val batteryReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -310,6 +321,9 @@ class MarineLocationService : Service() {
             lastSharedBreadcrumbTime = 0L
             lastTraceLatitude = null
             lastTraceLongitude = null
+            lastFuelTrackLatitude = null
+            lastFuelTrackLongitude = null
+            tripDistanceTraveledNm = 0.0
             safetyMonitor.resetTripState()
             alarmManager.playConfirmTone()
             wakeLock?.let { if (!it.isHeld) it.acquire(24 * 60 * 60 * 1000L) }
@@ -330,7 +344,15 @@ class MarineLocationService : Service() {
         wakeLock?.let { if (it.isHeld) it.release() }
         activeTripId = null
         isSosActive = false
-        _telemetry.value = _telemetry.value.copy(isTracking = false, speedKnots = 0.0)
+        _telemetry.value = _telemetry.value.copy(
+            isTracking = false,
+            speedKnots = 0.0,
+            fuelMarginLiters = null,
+            fuelRemainingLiters = null,
+            fuelNeededToReturnLiters = null,
+            distanceTraveledNm = 0.0,
+            activeSafetyAlert = null,
+        )
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
@@ -412,6 +434,29 @@ class MarineLocationService : Service() {
                 alarmManager.startEmergencySiren()
             }
 
+            if (activeTripId != null) {
+                val lastLat = lastFuelTrackLatitude
+                val lastLon = lastFuelTrackLongitude
+                if (lastLat != null && lastLon != null) {
+                    tripDistanceTraveledNm += NauticalMath.distanceNauticalMiles(lastLat, lastLon, lat, lon)
+                }
+                lastFuelTrackLatitude = lat
+                lastFuelTrackLongitude = lon
+            }
+
+            val settings = app.settingsRepository
+            val fuelEstimate = if (activeTripId != null && home != null && home.latitude != 0.0) {
+                FuelMarginCalculator.evaluate(
+                    tankLiters = settings.fuelTankLiters.value,
+                    distanceTraveledNm = tripDistanceTraveledNm,
+                    distanceToHomeNm = distToHome,
+                    referenceDistanceNm = settings.tripReferenceDistanceNm.value,
+                    referenceFuelLiters = settings.tripReferenceFuelLiters.value,
+                )
+            } else {
+                null
+            }
+
             val updatedTelemetry = MarineTelemetry(
                 isTracking = true, isSosActive = isSosActive, hasGpsFix = true,
                 tripId = activeTripId, tripStartTime = activeTripStartTime,
@@ -419,12 +464,17 @@ class MarineLocationService : Service() {
                 bearingDegrees = bearing, headingCardinal = NauticalMath.degreesToShortCardinal(bearing.toDouble()),
                 accuracyMeters = accuracy, batteryPct = currentBatteryPct,
                 distanceToHomeNm = distToHome, bearingToHomeDegrees = bearingToHome,
+                distanceTraveledNm = tripDistanceTraveledNm,
+                fuelMarginLiters = fuelEstimate?.marginLiters,
+                fuelRemainingLiters = fuelEstimate?.fuelRemainingLiters,
+                fuelNeededToReturnLiters = fuelEstimate?.fuelNeededToReturnLiters,
                 activeDestination = dest, distToDestNm = distToDest,
                 bearingToDestDegrees = bearingToDest, etaMinutes = eta, vmgKnots = vmg,
                 crossTrackErrorMeters = crossTrackError,
                 compassHeadingDegrees = current.compassHeadingDegrees,
                 compassAvailable = current.compassAvailable,
                 headingSource = current.headingSource,
+                activeSafetyAlert = current.activeSafetyAlert,
                 lastUpdateTime = System.currentTimeMillis()
             )
             _telemetry.value = updatedTelemetry
@@ -433,7 +483,6 @@ class MarineLocationService : Service() {
             updateForegroundNotification(speedKnots, NauticalMath.degreesToShortCardinal(bearing.toDouble()), distToHome, currentBatteryPct)
 
             activeTripId?.let { tripId ->
-                val settings = app.settingsRepository
                 val now = System.currentTimeMillis()
                 val elapsedSinceTracePoint = now - lastRecordedBreadcrumbTime
                 val movementMeters = if (lastTraceLatitude != null && lastTraceLongitude != null) {
@@ -486,6 +535,10 @@ class MarineLocationService : Service() {
                     stationaryMinutesThreshold = settings.stationaryThresholdMinutes.value,
                     reefWarningsEnabled = settings.reefWarningsEnabled.value,
                     reefWarningBufferMeters = settings.reefWarningBufferMeters.value,
+                    fuelTankLiters = settings.fuelTankLiters.value,
+                    distanceTraveledNm = tripDistanceTraveledNm,
+                    tripReferenceDistanceNm = settings.tripReferenceDistanceNm.value,
+                    tripReferenceFuelLiters = settings.tripReferenceFuelLiters.value,
                 ) { alertEvent ->
                     _telemetry.value = _telemetry.value.copy(activeSafetyAlert = alertEvent)
                     ConnectivitySyncWorker.enqueueImmediateSync(this@MarineLocationService)

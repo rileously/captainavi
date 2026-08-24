@@ -2,6 +2,7 @@ package com.captainavi.app.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.captainavi.app.safety.FuelMarginCalculator
 import com.captainavi.app.safety.StormAlertEvaluator
 import com.captainavi.app.safety.TripCalculator
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -98,6 +99,14 @@ class SettingsRepository(context: Context) {
         ).toDouble()
     )
     val tripReferenceFuelLiters: StateFlow<Double> = _tripReferenceFuelLiters.asStateFlow()
+
+    private val _fuelTankLiters = MutableStateFlow(
+        prefs.getFloat(
+            KEY_FUEL_TANK_LITERS,
+            FuelMarginCalculator.DEFAULT_TANK_LITERS.toFloat(),
+        ).toDouble()
+    )
+    val fuelTankLiters: StateFlow<Double> = _fuelTankLiters.asStateFlow()
 
     private val _reefWarningsEnabled = MutableStateFlow(
         prefs.getBoolean(KEY_REEF_WARNINGS_ENABLED, true)
@@ -216,6 +225,7 @@ class SettingsRepository(context: Context) {
         tripReferenceDistanceNm: Double,
         tripReferenceCostMvr: Double,
         tripReferenceFuelLiters: Double,
+        fuelTankLiters: Double,
         reefWarningsEnabled: Boolean,
         reefWarningBufferMeters: Int,
         stormAlertsEnabled: Boolean,
@@ -242,6 +252,9 @@ class SettingsRepository(context: Context) {
         val safeTripReferenceFuel = tripReferenceFuelLiters
             .takeIf { it.isFinite() && it >= 0.0 }
             ?: _tripReferenceFuelLiters.value
+        val safeFuelTankLiters = fuelTankLiters
+            .takeIf { it.isFinite() && it > 0.0 }
+            ?: _fuelTankLiters.value
         val safeTelegramInterval = telegramInterval.coerceIn(
             MIN_TELEGRAM_UPDATE_MINUTES,
             MAX_TELEGRAM_UPDATE_MINUTES,
@@ -264,6 +277,7 @@ class SettingsRepository(context: Context) {
             .putFloat(KEY_TRIP_REFERENCE_DISTANCE_NM, safeTripReferenceDistance.toFloat())
             .putFloat(KEY_TRIP_REFERENCE_COST_MVR, safeTripReferenceCost.toFloat())
             .putFloat(KEY_TRIP_REFERENCE_FUEL_LITERS, safeTripReferenceFuel.toFloat())
+            .putFloat(KEY_FUEL_TANK_LITERS, safeFuelTankLiters.toFloat())
             .putBoolean(KEY_REEF_WARNINGS_ENABLED, reefWarningsEnabled)
             .putInt(KEY_REEF_WARNING_BUFFER_METERS, safeReefBuffer)
             .putBoolean(KEY_STORM_ALERTS_ENABLED, stormAlertsEnabled)
@@ -287,6 +301,7 @@ class SettingsRepository(context: Context) {
         _tripReferenceDistanceNm.value = safeTripReferenceDistance
         _tripReferenceCostMvr.value = safeTripReferenceCost
         _tripReferenceFuelLiters.value = safeTripReferenceFuel
+        _fuelTankLiters.value = safeFuelTankLiters
         _reefWarningsEnabled.value = reefWarningsEnabled
         _reefWarningBufferMeters.value = safeReefBuffer
         _stormAlertsEnabled.value = stormAlertsEnabled
@@ -316,6 +331,7 @@ class SettingsRepository(context: Context) {
         private const val KEY_TRIP_REFERENCE_DISTANCE_NM = "trip_reference_distance_nm"
         private const val KEY_TRIP_REFERENCE_COST_MVR = "trip_reference_cost_mvr"
         private const val KEY_TRIP_REFERENCE_FUEL_LITERS = "trip_reference_fuel_liters"
+        private const val KEY_FUEL_TANK_LITERS = "fuel_tank_liters"
         private const val KEY_REEF_WARNINGS_ENABLED = "reef_warnings_enabled"
         private const val KEY_REEF_WARNING_BUFFER_METERS = "reef_warning_buffer_meters"
         private const val KEY_STORM_ALERTS_ENABLED = "storm_alerts_enabled"

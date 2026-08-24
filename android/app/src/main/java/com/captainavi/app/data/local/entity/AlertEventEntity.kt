@@ -11,7 +11,8 @@ enum class AlertType {
     GEOFENCE_EXIT,
     DANGER_ZONE_ENTRY,
     NO_MOVEMENT,
-    GPS_LOST
+    GPS_LOST,
+    LOW_FUEL
 }
 
 @Entity(
