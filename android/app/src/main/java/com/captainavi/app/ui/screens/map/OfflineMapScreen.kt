@@ -299,6 +299,7 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
             sourceMaxZoom = source.maximumZoomLevel,
         )
         selectedIslandId = island.id
+        selectedIslandForContacts = island
         savedMapLatitude = island.latitude
         savedMapLongitude = island.longitude
         savedMapZoom = targetZoom
@@ -1572,6 +1573,8 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                         islands = islandGazetteerState.islands
                         selectedIslandId = selectedIslandId
                         onIslandTap = { island ->
+                            selectedFollowMeBoat = null
+                            followMeBoatChoices = emptyList()
                             selectedIslandId = island.id
                             selectedIslandForContacts = island
                         }
@@ -1626,6 +1629,8 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                     overlay.islands = islandGazetteerState.islands
                     overlay.selectedIslandId = selectedIslandId
                     overlay.onIslandTap = { island ->
+                        selectedFollowMeBoat = null
+                        followMeBoatChoices = emptyList()
                         selectedIslandId = island.id
                         selectedIslandForContacts = island
                     }

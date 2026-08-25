@@ -75,6 +75,15 @@ internal fun IslandEmergencyContactsDialog(
                     color = colors.textPrimary,
                 )
                 Text(
+                    buildString {
+                        append(island.category.ifBlank { "Island" })
+                        append(" · ")
+                        append(String.format(java.util.Locale.US, "%.4f°, %.4f°", island.latitude, island.longitude))
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colors.textSecondary,
+                )
+                Text(
                     "Call opens your phone app with the number ready. The app never starts a call automatically.",
                     style = MaterialTheme.typography.bodySmall,
                     color = colors.textSecondary,

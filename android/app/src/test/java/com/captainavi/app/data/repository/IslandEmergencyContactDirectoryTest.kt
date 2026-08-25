@@ -17,6 +17,13 @@ class IslandEmergencyContactDirectoryTest {
     }
 
     @Test
+    fun `lookup key falls back when island id drifts`() {
+        val directory = parseIslandEmergencyContactDirectory(SAMPLE_ASSET)
+        val key = contactLookupKey("Naivaadhoo", "Haa Dhaalu")
+        assertEquals("6520039", directory.contactsByLookupKey.getValue(key).council?.phones?.single())
+    }
+
+    @Test
     fun `accepts local short codes and seven digit numbers only`() {
         assertTrue(isDialableMaldivesNumber("1401"))
         assertTrue(isDialableMaldivesNumber("6520548"))

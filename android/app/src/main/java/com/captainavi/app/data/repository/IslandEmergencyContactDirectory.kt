@@ -25,6 +25,7 @@ data class IslandEmergencyContacts(
 data class IslandEmergencyDirectoryData(
     val snapshotDate: String,
     val contactsByIslandId: Map<Int, IslandEmergencyContacts>,
+    val contactsByLookupKey: Map<String, IslandEmergencyContacts> = emptyMap(),
 )
 
 class IslandEmergencyContactDirectory(context: Context) {
@@ -39,13 +40,20 @@ class IslandEmergencyContactDirectory(context: Context) {
     val snapshotDate: String
         get() = directory.snapshotDate
 
-    fun contactsFor(island: IslandPlace): IslandEmergencyContacts? =
-        directory.contactsByIslandId[island.id]
+    fun contactsFor(island: IslandPlace): IslandEmergencyContacts? {
+        directory.contactsByIslandId[island.id]?.let { return it }
+        // Online gazetteer refreshes can renumber OBJECTIDs; fall back to name+atoll.
+        val key = contactLookupKey(island.englishName, island.atoll)
+        return directory.contactsByLookupKey[key]
+    }
 
     companion object {
         private const val ASSET_NAME = "island_emergency_contacts_v1.json"
     }
 }
+
+internal fun contactLookupKey(englishName: String, atoll: String): String =
+    "${englishName.trim().lowercase()}|${atoll.trim().lowercase()}"
 
 internal fun parseIslandEmergencyContactDirectory(
     encoded: String,
@@ -68,6 +76,9 @@ internal fun parseIslandEmergencyContactDirectory(
     return IslandEmergencyDirectoryData(
         snapshotDate = asset.snapshotDate,
         contactsByIslandId = asset.contacts.associateBy(IslandEmergencyContacts::islandId),
+        contactsByLookupKey = asset.contacts.associateBy { contact ->
+            contactLookupKey(contact.islandName, contact.atoll)
+        },
     )
 }
 

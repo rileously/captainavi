@@ -12,6 +12,10 @@ import com.captainavi.app.data.repository.shouldShowLabelAtZoom
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Overlay
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 class IslandLabelsOverlay(context: Context) : Overlay() {
     var islands: List<IslandPlace> = emptyList()
@@ -100,34 +104,42 @@ class IslandLabelsOverlay(context: Context) : Overlay() {
             val screenRect = RectF(left, bottom - boxHeight, left + boxWidth, bottom)
             val collisionRect = RectF(screenRect).apply { inset(-3f * density, -3f * density) }
             val isSelected = island.id == selectedIslandId
-            if (!isSelected && occupied.any { RectF.intersects(it, collisionRect) }) return@forEach
-            occupied += collisionRect
             val labelTapPadding = 8f * density
             val dotTapRadius = 22f * density
+            val dotBounds = RectF(
+                screenPoint.x - dotTapRadius,
+                screenPoint.y - dotTapRadius,
+                screenPoint.x + dotTapRadius,
+                screenPoint.y + dotTapRadius,
+            )
+
+            // Always keep a tappable dot, even when the text label is collision-culled.
+            // Previously culled islands vanished from hit-testing, so taps near a visible
+            // atoll island often did nothing.
+            val labelCulled = !isSelected && occupied.any { RectF.intersects(it, collisionRect) }
             newHitTargets += IslandLabelHitTarget(
                 island = island,
-                labelBounds = RectF(screenRect).apply {
+                labelBounds = if (labelCulled) null else RectF(screenRect).apply {
                     inset(-labelTapPadding, -labelTapPadding)
                 },
-                dotBounds = RectF(
-                    screenPoint.x - dotTapRadius,
-                    screenPoint.y - dotTapRadius,
-                    screenPoint.x + dotTapRadius,
-                    screenPoint.y + dotTapRadius,
-                ),
+                dotBounds = dotBounds,
+                centerX = screenPoint.x.toFloat(),
+                centerY = screenPoint.y.toFloat(),
             )
+
+            canvas.drawCircle(mapPoint.x.toFloat(), mapPoint.y.toFloat(), 3f * density, dotPaint)
+            if (labelCulled) return@forEach
+
+            occupied += collisionRect
 
             // MapView rotates the overlay canvas. Counter-rotate labels around their
             // geographic anchor so both Latin and Thaana text remain screen-upright.
-            // The rect is first clamped in screen coordinates, then translated back
-            // into the rotated canvas coordinate space for drawing.
             val rect = RectF(screenRect).apply {
                 offset(
                     mapPoint.x.toFloat() - screenPoint.x,
                     mapPoint.y.toFloat() - screenPoint.y,
                 )
             }
-            canvas.drawCircle(mapPoint.x.toFloat(), mapPoint.y.toFloat(), 3f * density, dotPaint)
             val saveCount = canvas.save()
             canvas.rotate(
                 counterRotationForMap(projection.orientation),
@@ -151,13 +163,45 @@ class IslandLabelsOverlay(context: Context) : Overlay() {
     }
 
     override fun onSingleTapConfirmed(event: MotionEvent, mapView: MapView): Boolean {
-        val target = hitTargets.firstOrNull {
-            it.labelBounds.contains(event.x, event.y) || it.dotBounds.contains(event.x, event.y)
-        } ?: return false
-        selectedIslandId = target.island.id
-        onIslandTap(target.island)
-        mapView.invalidate()
+        val island = resolveTappedIsland(event.x, event.y, mapView) ?: return false
+        // Compose state updates must run on the main thread; post in case osmdroid
+        // delivers the tap from a worker path on some devices.
+        mapView.post {
+            selectedIslandId = island.id
+            onIslandTap(island)
+            mapView.invalidate()
+        }
         return true
+    }
+
+    internal fun resolveTappedIsland(tapX: Float, tapY: Float, mapView: MapView): IslandPlace? {
+        val direct = hitTargets
+            .filter { target ->
+                target.labelBounds?.contains(tapX, tapY) == true ||
+                    target.dotBounds.contains(tapX, tapY)
+            }
+            .minByOrNull { target ->
+                val dx = tapX - target.centerX
+                val dy = tapY - target.centerY
+                dx * dx + dy * dy
+            }
+        if (direct != null) return direct.island
+
+        // Fallback: nearest gazetteer island under the finger when labels are sparse
+        // or the tap lands on the basemap island rather than the text pill.
+        val zoom = mapView.zoomLevelDouble
+        val maxMeters = maxIslandTapDistanceMeters(zoom)
+        if (maxMeters <= 0.0 || islands.isEmpty()) return null
+
+        val geo = mapView.projection.fromPixels(tapX.toInt(), tapY.toInt())
+        return nearestIslandWithin(
+            islands = islands,
+            latitude = geo.latitude,
+            longitude = geo.longitude,
+            maxDistanceMeters = maxMeters,
+            zoom = zoom,
+            selectedIslandId = selectedIslandId,
+        )
     }
 
     companion object {
@@ -167,8 +211,56 @@ class IslandLabelsOverlay(context: Context) : Overlay() {
 
 private data class IslandLabelHitTarget(
     val island: IslandPlace,
-    val labelBounds: RectF,
+    val labelBounds: RectF?,
     val dotBounds: RectF,
+    val centerX: Float,
+    val centerY: Float,
 )
 
 internal fun counterRotationForMap(mapOrientation: Float): Float = -mapOrientation
+
+internal fun maxIslandTapDistanceMeters(zoom: Double): Double = when {
+    zoom >= 14.0 -> 450.0
+    zoom >= 12.0 -> 900.0
+    zoom >= 10.0 -> 1_800.0
+    zoom >= 8.5 -> 3_200.0
+    zoom >= 7.5 -> 5_000.0
+    else -> 0.0
+}
+
+internal fun nearestIslandWithin(
+    islands: List<IslandPlace>,
+    latitude: Double,
+    longitude: Double,
+    maxDistanceMeters: Double,
+    zoom: Double,
+    selectedIslandId: Int? = null,
+): IslandPlace? {
+    if (maxDistanceMeters <= 0.0) return null
+    var best: IslandPlace? = null
+    var bestMeters = maxDistanceMeters
+    for (island in islands) {
+        if (island.id != selectedIslandId && !island.shouldShowLabelAtZoom(zoom)) continue
+        val meters = haversineMeters(latitude, longitude, island.latitude, island.longitude)
+        if (meters < bestMeters) {
+            bestMeters = meters
+            best = island
+        }
+    }
+    return best
+}
+
+private fun haversineMeters(
+    lat1: Double,
+    lon1: Double,
+    lat2: Double,
+    lon2: Double,
+): Double {
+    val earthRadius = 6_371_000.0
+    val dLat = Math.toRadians(lat2 - lat1)
+    val dLon = Math.toRadians(lon2 - lon1)
+    val a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
+        sin(dLon / 2) * sin(dLon / 2)
+    return 2 * earthRadius * atan2(sqrt(a), sqrt(1 - a))
+}
