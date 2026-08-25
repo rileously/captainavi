@@ -1,0 +1,61 @@
+{
+  "version": 2,
+  "source": "Maldives Tuna Fishery Management Plan + Maldives Reef Fishery Management Plan (MoFMRA / FAOLEX)",
+  "note": "Habitat follows official Maldives fishery-plan scope: tuna-plan species are Ocean; reef-plan annex species are Reef (including wahoo and dogtooth tuna). Reference photos live under assets/fish/{id}.jpg (see fish/ATTRIBUTION.txt).",
+  "habitats": [
+    {
+      "id": "OCEAN",
+      "label": "Ocean fish",
+      "plan": "Maldives Tuna Fishery Management Plan",
+      "species": [
+        { "id": "skipjack", "commonName": "Skipjack tuna", "scientificName": "Katsuwonus pelamis", "localName": "Kalhubilamas" },
+        { "id": "yellowfin", "commonName": "Yellowfin tuna", "scientificName": "Thunnus albacares", "localName": "Kanneli" },
+        { "id": "bigeye", "commonName": "Bigeye tuna", "scientificName": "Thunnus obesus", "localName": "Loabodu kanneli" },
+        { "id": "frigate", "commonName": "Frigate tuna", "scientificName": "Auxis thazard", "localName": "Ragondi" },
+        { "id": "kawakawa", "commonName": "Kawakawa", "scientificName": "Euthynnus affinis", "localName": "Latti" },
+        { "id": "mahimahi", "commonName": "Mahimahi / Dorado", "scientificName": "Coryphaena hippurus", "localName": "" },
+        { "id": "sailfish", "commonName": "Sailfish", "scientificName": "Istiophorus platypterus", "localName": "" },
+        { "id": "marlin", "commonName": "Blue marlin", "scientificName": "Makaira nigricans", "localName": "" },
+        { "id": "swordfish", "commonName": "Swordfish", "scientificName": "Xiphias gladius", "localName": "" },
+        { "id": "spanish_mackerel", "commonName": "Narrow-barred Spanish mackerel", "scientificName": "Scomberomorus commerson", "localName": "" },
+        { "id": "ocean_other", "commonName": "Ocean fish (other)", "scientificName": "", "localName": "" }
+      ]
+    },
+    {
+      "id": "REEF",
+      "label": "Reef fish",
+      "plan": "Maldives Reef Fishery Management Plan (Annex 2)",
+      "species": [
+        { "id": "raiymas", "commonName": "Two-spot red snapper", "scientificName": "Lutjanus bohar", "localName": "Raiymas" },
+        { "id": "ginimas", "commonName": "Humpback red snapper", "scientificName": "Lutjanus gibbus", "localName": "Ginimas" },
+        { "id": "giulhu", "commonName": "Green jobfish", "scientificName": "Aprion virescens", "localName": "Giulhu" },
+        { "id": "rusty_jobfish", "commonName": "Rusty jobfish", "scientificName": "Aphareus rutilans", "localName": "Rankarumas" },
+        { "id": "foniyamas", "commonName": "Black and white snapper", "scientificName": "Macolor niger", "localName": "Foniyamas" },
+        { "id": "one_spot_snapper", "commonName": "One-spot snapper", "scientificName": "Lutjanus monostigma", "localName": "Filolhu" },
+        { "id": "bluestripe_snapper", "commonName": "Bluestripe snapper", "scientificName": "Lutjanus kasmira", "localName": "Dhon reen’dhoomas" },
+        { "id": "blacktail_snapper", "commonName": "Blacktail snapper", "scientificName": "Lutjanus fulvus", "localName": "Dhon' mas" },
+        { "id": "emperor_red_snapper", "commonName": "Emperor red snapper", "scientificName": "Lutjanus sebae", "localName": "Maa ginimas" },
+        { "id": "longface_emperor", "commonName": "Longface emperor", "scientificName": "Lethrinus olivaceus", "localName": "Kashi thun filolhu" },
+        { "id": "thumbprint_emperor", "commonName": "Thumbprint emperor", "scientificName": "Lethrinus harak", "localName": "Lah' filolhu" },
+        { "id": "spangled_emperor", "commonName": "Spangled emperor", "scientificName": "Lethrinus nebulosus", "localName": "" },
+        { "id": "rainbow_runner", "commonName": "Rainbow runner", "scientificName": "Elagatis bipinnulata", "localName": "Maaniyamas" },
+        { "id": "bluefin_trevally", "commonName": "Bluefin trevally", "scientificName": "Caranx melampygus", "localName": "Fani han’dhi" },
+        { "id": "bigeye_trevally", "commonName": "Bigeye trevally", "scientificName": "Caranx sexfasciatus", "localName": "Haluvimas" },
+        { "id": "giant_trevally", "commonName": "Giant trevally", "scientificName": "Caranx ignobilis", "localName": "Muda han’dhi" },
+        { "id": "black_trevally", "commonName": "Black trevally", "scientificName": "Caranx lugubris", "localName": "Kalha han’dhi" },
+        { "id": "golden_trevally", "commonName": "Golden trevally", "scientificName": "Gnathanodon speciosus", "localName": "Libaas han’dhi" },
+        { "id": "almaco_jack", "commonName": "Almaco jack", "scientificName": "Seriola rivoliana", "localName": "An’dhunmas" },
+        { "id": "queenfish", "commonName": "Doublespotted queenfish", "scientificName": "Scomberoides lysan", "localName": "Kashi vaali" },
+        { "id": "wahoo", "commonName": "Wahoo", "scientificName": "Acanthocybium solandri", "localName": "Kurumas" },
+        { "id": "dogtooth", "commonName": "Dogtooth tuna", "scientificName": "Gymnosarda unicolor", "localName": "Voshimas" },
+        { "id": "barracuda", "commonName": "Great barracuda", "scientificName": "Sphyraena barracuda", "localName": "Tholhi" },
+        { "id": "coral_trout", "commonName": "Coral trout", "scientificName": "Plectropomus leopardus", "localName": "" },
+        { "id": "peacock_grouper", "commonName": "Peacock grouper", "scientificName": "Cephalopholis argus", "localName": "" },
+        { "id": "sweetlips", "commonName": "Oriental sweetlips", "scientificName": "Plectorhinchus vittatus", "localName": "Kan'du guruva" },
+        { "id": "napoleon_wrasse", "commonName": "Napoleon wrasse", "scientificName": "Cheilinus undulatus", "localName": "Maa hulhun'bu landa" },
+        { "id": "parrotfish", "commonName": "Parrotfish", "scientificName": "Scarus ghobban", "localName": "Landa" },
+        { "id": "reef_other", "commonName": "Reef fish (other)", "scientificName": "", "localName": "" }
+      ]
+    }
+  ]
+}

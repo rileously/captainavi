@@ -3,6 +3,7 @@ package com.captainavi.app.ui.screens.waypoints
 import android.graphics.Color as AndroidColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,12 +13,15 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -31,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -38,7 +43,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.captainavi.app.data.local.entity.WaypointEntity
 import com.captainavi.app.data.local.entity.WaypointType
+import com.captainavi.app.data.repository.FishHabitat
+import com.captainavi.app.data.repository.MaldivesFishCatalog
+import com.captainavi.app.data.repository.targetSpecies
 import com.captainavi.app.ui.components.marineTextFieldColors
 import com.captainavi.app.ui.screens.map.StreetTileSource
 import com.captainavi.app.ui.theme.MarineTheme
@@ -53,15 +62,65 @@ import org.osmdroid.views.overlay.Marker
 fun AddWaypointDialog(
     initialLat: Double,
     initialLon: Double,
-    onSave: (name: String, type: WaypointType, lat: Double, lon: Double, desc: String) -> Unit,
+    existing: WaypointEntity? = null,
+    /** When editing a harbour/reef/home mark, open already switched to Fishing. */
+    convertToFishSpot: Boolean = false,
+    onSave: (
+        name: String,
+        type: WaypointType,
+        lat: Double,
+        lon: Double,
+        desc: String,
+        targetSpecies: List<String>,
+    ) -> Unit,
     onDismiss: () -> Unit
 ) {
     val colors = MarineTheme.colors
-    var name by remember { mutableStateOf("") }
-    var latText by remember { mutableStateOf(if (initialLat != 0.0) initialLat.toString() else "4.1755") }
-    var lonText by remember { mutableStateOf(if (initialLon != 0.0) initialLon.toString() else "73.5093") }
-    var selectedType by remember { mutableStateOf(WaypointType.FISHING_SPOT) }
-    var description by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    val isEditing = existing != null
+    val seedSpecies = remember(existing?.id, existing?.targetSpeciesJson) {
+        existing?.targetSpecies().orEmpty()
+    }
+    var name by remember(existing?.id) { mutableStateOf(existing?.name.orEmpty()) }
+    var latText by remember(existing?.id) {
+        mutableStateOf(
+            when {
+                existing != null -> existing.latitude.toString()
+                initialLat != 0.0 -> initialLat.toString()
+                else -> "4.1755"
+            },
+        )
+    }
+    var lonText by remember(existing?.id) {
+        mutableStateOf(
+            when {
+                existing != null -> existing.longitude.toString()
+                initialLon != 0.0 -> initialLon.toString()
+                else -> "73.5093"
+            },
+        )
+    }
+    var selectedType by remember(existing?.id, convertToFishSpot) {
+        mutableStateOf(
+            when {
+                convertToFishSpot -> WaypointType.FISHING_SPOT
+                else -> existing?.type ?: WaypointType.FISHING_SPOT
+            },
+        )
+    }
+    var description by remember(existing?.id) { mutableStateOf(existing?.description.orEmpty()) }
+    var speciesHabitat by remember(existing?.id) {
+        mutableStateOf(
+            seedSpecies.firstOrNull()
+                ?.let { MaldivesFishCatalog.resolveHabitat(context, it) }
+                ?.takeIf { it == FishHabitat.OCEAN || it == FishHabitat.REEF }
+                ?: FishHabitat.OCEAN,
+        )
+    }
+    var selectedSpecies by remember(existing?.id) { mutableStateOf(seedSpecies.toSet()) }
+    val catalogSpecies = remember(speciesHabitat, context) {
+        MaldivesFishCatalog.speciesFor(context, speciesHabitat).filterNot { it.isOther }
+    }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -70,7 +129,7 @@ fun AddWaypointDialog(
         Box(
             modifier = Modifier
                 .fillMaxWidth(0.95f)
-                .fillMaxHeight(0.90f)
+                .fillMaxHeight(0.92f)
                 .background(colors.background, RoundedCornerShape(16.dp))
                 .border(1.dp, colors.border, RoundedCornerShape(16.dp))
                 .padding(16.dp)
@@ -84,7 +143,7 @@ fun AddWaypointDialog(
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     Text(
-                        text = "Save mark",
+                        text = if (isEditing) "Edit mark" else "Save mark",
                         style = MaterialTheme.typography.titleMedium,
                         color = colors.textPrimary
                     )
@@ -123,6 +182,36 @@ fun AddWaypointDialog(
                         }
                     }
 
+                    if (isEditing && existing!!.type != WaypointType.FISHING_SPOT && selectedType != WaypointType.FISHING_SPOT) {
+                        Button(
+                            onClick = { selectedType = WaypointType.FISHING_SPOT },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colors.caution.copy(alpha = 0.22f),
+                                contentColor = colors.caution,
+                            ),
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(10.dp),
+                        ) {
+                            Text("Convert to fish spot", style = MaterialTheme.typography.labelLarge)
+                        }
+                        Text(
+                            "Keeps this position — then pick species you can catch here.",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = colors.textMuted,
+                        )
+                    }
+
+                    if (isEditing &&
+                        existing!!.type != WaypointType.FISHING_SPOT &&
+                        selectedType == WaypointType.FISHING_SPOT
+                    ) {
+                        Text(
+                            "Converted to fish spot — select species below, then update.",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = colors.caution,
+                        )
+                    }
+
                     WaypointLocationMap(
                         latitude = latText.toDoubleOrNull() ?: initialLat,
                         longitude = lonText.toDoubleOrNull() ?: initialLon,
@@ -132,7 +221,7 @@ fun AddWaypointDialog(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(150.dp),
+                            .height(140.dp),
                     )
 
                     Row(
@@ -155,6 +244,72 @@ fun AddWaypointDialog(
                         )
                     }
 
+                    if (selectedType == WaypointType.FISHING_SPOT) {
+                        Text(
+                            "Fish at this spot",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = colors.caution,
+                        )
+                        Text(
+                            "Tap species you can catch here (${selectedSpecies.size} selected)",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = colors.textMuted,
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        ) {
+                            listOf(FishHabitat.OCEAN, FishHabitat.REEF).forEach { option ->
+                                val active = speciesHabitat == option
+                                val accent = if (option == FishHabitat.OCEAN) colors.accent else colors.success
+                                FilterChip(
+                                    selected = active,
+                                    onClick = { speciesHabitat = option },
+                                    label = { Text(option.label) },
+                                    colors = FilterChipDefaults.filterChipColors(
+                                        selectedContainerColor = accent.copy(alpha = 0.22f),
+                                        selectedLabelColor = accent,
+                                        labelColor = colors.textSecondary,
+                                    ),
+                                )
+                            }
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        ) {
+                            catalogSpecies.forEach { species ->
+                                val picked = species.commonName in selectedSpecies
+                                FilterChip(
+                                    selected = picked,
+                                    onClick = {
+                                        selectedSpecies = if (picked) {
+                                            selectedSpecies - species.commonName
+                                        } else {
+                                            selectedSpecies + species.commonName
+                                        }
+                                    },
+                                    label = { Text(species.commonName) },
+                                    colors = FilterChipDefaults.filterChipColors(
+                                        selectedContainerColor = colors.caution.copy(alpha = 0.28f),
+                                        selectedLabelColor = colors.caution,
+                                        labelColor = colors.textPrimary,
+                                    ),
+                                )
+                            }
+                        }
+                        if (selectedSpecies.isNotEmpty()) {
+                            Text(
+                                selectedSpecies.joinToString(" · "),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = colors.textSecondary,
+                                modifier = Modifier.heightIn(max = 40.dp),
+                            )
+                        }
+                    }
+
                     OutlinedTextField(
                         value = description,
                         onValueChange = { description = it },
@@ -169,8 +324,25 @@ fun AddWaypointDialog(
                         onClick = {
                             val lat = latText.toDoubleOrNull() ?: initialLat
                             val lon = lonText.toDoubleOrNull() ?: initialLon
-                            val markName = if (name.isNotBlank()) name else "Fishing mark"
-                            onSave(markName, selectedType, lat, lon, description)
+                            val markName = if (name.isNotBlank()) {
+                                name
+                            } else if (selectedType == WaypointType.FISHING_SPOT) {
+                                "Fish spot"
+                            } else {
+                                "Fishing mark"
+                            }
+                            onSave(
+                                markName,
+                                selectedType,
+                                lat,
+                                lon,
+                                description,
+                                if (selectedType == WaypointType.FISHING_SPOT) {
+                                    selectedSpecies.toList()
+                                } else {
+                                    emptyList()
+                                },
+                            )
                             onDismiss()
                         },
                         colors = ButtonDefaults.buttonColors(
@@ -180,7 +352,18 @@ fun AddWaypointDialog(
                         modifier = Modifier.fillMaxWidth().height(52.dp),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("Save waypoint", style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            when {
+                                isEditing &&
+                                    existing!!.type != WaypointType.FISHING_SPOT &&
+                                    selectedType == WaypointType.FISHING_SPOT -> "Convert & save fish spot"
+                                isEditing && selectedType == WaypointType.FISHING_SPOT -> "Update fish spot"
+                                isEditing -> "Update mark"
+                                selectedType == WaypointType.FISHING_SPOT -> "Save fish spot"
+                                else -> "Save waypoint"
+                            },
+                            style = MaterialTheme.typography.titleMedium,
+                        )
                     }
 
                     OutlinedButton(

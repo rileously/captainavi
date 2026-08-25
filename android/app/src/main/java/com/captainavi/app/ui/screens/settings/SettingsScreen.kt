@@ -56,6 +56,7 @@ import com.captainavi.app.CaptainAviApp
 import com.captainavi.app.data.repository.SettingsRepository
 import com.captainavi.app.localization.Language
 import com.captainavi.app.localization.LanguageManager
+import com.captainavi.app.safety.DarkReturnEvaluator
 import com.captainavi.app.safety.FuelMarginCalculator
 import com.captainavi.app.safety.StormAlertEvaluator
 import com.captainavi.app.sms.OfflineSmsRules
@@ -93,6 +94,8 @@ fun SettingsScreen(
     val tripReferenceCostMvr by settings.tripReferenceCostMvr.collectAsState()
     val tripReferenceFuelLiters by settings.tripReferenceFuelLiters.collectAsState()
     val fuelTankLiters by settings.fuelTankLiters.collectAsState()
+    val darkReturnWarningEnabled by settings.darkReturnWarningEnabled.collectAsState()
+    val cruiseSpeedKnots by settings.cruiseSpeedKnots.collectAsState()
     val reefWarningsEnabled by settings.reefWarningsEnabled.collectAsState()
     val reefWarningBufferMeters by settings.reefWarningBufferMeters.collectAsState()
     val stormAlertsEnabled by settings.stormAlertsEnabled.collectAsState()
@@ -116,6 +119,8 @@ fun SettingsScreen(
     var tripCostInput by remember(tripReferenceCostMvr) { mutableStateOf(tripReferenceCostMvr.toString()) }
     var tripFuelInput by remember(tripReferenceFuelLiters) { mutableStateOf(tripReferenceFuelLiters.toString()) }
     var fuelTankInput by remember(fuelTankLiters) { mutableStateOf(fuelTankLiters.toString()) }
+    var darkReturnWarningInput by remember(darkReturnWarningEnabled) { mutableStateOf(darkReturnWarningEnabled) }
+    var cruiseSpeedInput by remember(cruiseSpeedKnots) { mutableStateOf(cruiseSpeedKnots.toString()) }
     var reefWarningsInput by remember(reefWarningsEnabled) { mutableStateOf(reefWarningsEnabled) }
     var reefBufferInput by remember(reefWarningBufferMeters) { mutableStateOf(reefWarningBufferMeters.toString()) }
     var stormAlertsInput by remember(stormAlertsEnabled) { mutableStateOf(stormAlertsEnabled) }
@@ -519,6 +524,22 @@ fun SettingsScreen(
                     color = colors.textSecondary,
                 )
                 SettingSwitchRow(
+                    title = "Dark-return warning",
+                    subtitle = "Warn during a trip when your ETA home is after sunset — or tight before it. Sunset is computed on-device, so this works offshore with no signal.",
+                    checked = darkReturnWarningInput,
+                    onCheckedChange = { darkReturnWarningInput = it }
+                )
+                OutlinedTextField(
+                    value = cruiseSpeedInput,
+                    onValueChange = { cruiseSpeedInput = it.decimalCharactersOnly() },
+                    label = { Text("Typical cruise speed (kt)") },
+                    supportingText = { Text("Used to estimate time home while drifting or anchored; underway, your live speed is used") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = fieldColors,
+                    enabled = darkReturnWarningInput,
+                )
+                SettingSwitchRow(
                     title = "Simulation mode",
                     subtitle = "Test a voyage around home harbour without real GPS movement.",
                     checked = simModeInput,
@@ -543,6 +564,11 @@ fun SettingsScreen(
                 }
                 if (tankLiters == null || tankLiters <= 0.0) {
                     saveToast = false to "Fuel tank capacity must be above zero"
+                    return@Button
+                }
+                val cruiseKnots = cruiseSpeedInput.toDoubleOrNull()
+                if (darkReturnWarningInput && (cruiseKnots == null || cruiseKnots <= 0.0)) {
+                    saveToast = false to "Cruise speed must be above zero"
                     return@Button
                 }
                 val smsConfigured = trustedSmsNumberInput.isNotBlank() || smsAutoReplyInput
@@ -575,6 +601,8 @@ fun SettingsScreen(
                     tripReferenceCostMvr = referenceCost,
                     tripReferenceFuelLiters = referenceFuel,
                     fuelTankLiters = tankLiters,
+                    darkReturnWarningEnabled = darkReturnWarningInput,
+                    cruiseSpeedKnots = cruiseKnots ?: DarkReturnEvaluator.DEFAULT_CRUISE_SPEED_KNOTS,
                     reefWarningsEnabled = reefWarningsInput,
                     reefWarningBufferMeters = reefBufferInput.toIntOrNull() ?: 300,
                     stormAlertsEnabled = stormAlertsInput,

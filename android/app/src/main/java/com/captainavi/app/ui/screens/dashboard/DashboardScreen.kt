@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.PersonOff
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.SetMeal
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.filled.SystemUpdate
 import androidx.compose.material.icons.filled.Timer
@@ -87,6 +88,7 @@ fun DashboardScreen(
     onNavigateToMap: () -> Unit,
     onNavigateToTides: () -> Unit = {},
     onNavigateToSettings: () -> Unit = {},
+    onNavigateToCatch: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val colors = MarineTheme.colors
@@ -473,6 +475,19 @@ fun DashboardScreen(
                         Icon(Icons.Default.Stop, contentDescription = null, modifier = Modifier.size(26.dp))
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(LanguageManager.endTripReturnHome, style = MaterialTheme.typography.titleMedium)
+                    }
+                    if (activeTrip != null) {
+                        OutlinedButton(
+                            onClick = onNavigateToCatch,
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = colors.success),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, colors.success),
+                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            shape = RoundedCornerShape(12.dp),
+                        ) {
+                            Icon(Icons.Default.SetMeal, contentDescription = null, modifier = Modifier.size(20.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text("Log catch", style = MaterialTheme.typography.titleSmall)
+                        }
                     }
                 }
 

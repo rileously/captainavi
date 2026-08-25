@@ -88,7 +88,8 @@ class WaypointRepository(
         latitude: Double,
         longitude: Double,
         radiusMeters: Double = 200.0,
-        description: String = ""
+        description: String = "",
+        targetSpecies: List<String> = emptyList(),
     ): WaypointEntity {
         val waypoint = WaypointEntity(
             id = UUID.randomUUID().toString(),
@@ -97,11 +98,51 @@ class WaypointRepository(
             latitude = latitude,
             longitude = longitude,
             radiusMeters = radiusMeters,
-            description = description
+            description = description,
+            targetSpeciesJson = encodeTargetSpecies(
+                if (type == WaypointType.FISHING_SPOT) targetSpecies else emptyList(),
+            ),
         )
         waypointDao.insertWaypoint(waypoint)
         invalidateCaches()
         return waypoint
+    }
+
+    suspend fun updateWaypoint(waypoint: WaypointEntity) {
+        waypointDao.updateWaypoint(waypoint)
+        invalidateCaches()
+    }
+
+    suspend fun updateWaypointDetails(
+        waypoint: WaypointEntity,
+        name: String,
+        type: WaypointType,
+        latitude: Double,
+        longitude: Double,
+        description: String = "",
+        targetSpecies: List<String> = emptyList(),
+    ): WaypointEntity {
+        val convertingToFishSpot =
+            type == WaypointType.FISHING_SPOT && waypoint.type != WaypointType.FISHING_SPOT
+        val updated = waypoint.copy(
+            name = name,
+            type = type,
+            latitude = latitude,
+            longitude = longitude,
+            description = description,
+            // Fish marks use a compact radius; reef danger circles keep theirs unless converting away.
+            radiusMeters = when {
+                convertingToFishSpot -> 200.0
+                type == WaypointType.DANGER_REEF && waypoint.type != WaypointType.DANGER_REEF ->
+                    waypoint.radiusMeters.coerceAtLeast(200.0)
+                else -> waypoint.radiusMeters
+            },
+            targetSpeciesJson = encodeTargetSpecies(
+                if (type == WaypointType.FISHING_SPOT) targetSpecies else emptyList(),
+            ),
+        )
+        updateWaypoint(updated)
+        return updated
     }
 
     suspend fun deleteWaypoint(waypoint: WaypointEntity) {

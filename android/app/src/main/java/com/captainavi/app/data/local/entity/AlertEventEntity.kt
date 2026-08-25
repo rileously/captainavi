@@ -12,7 +12,8 @@ enum class AlertType {
     DANGER_ZONE_ENTRY,
     NO_MOVEMENT,
     GPS_LOST,
-    LOW_FUEL
+    LOW_FUEL,
+    DARK_RETURN
 }
 
 @Entity(

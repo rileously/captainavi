@@ -35,6 +35,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddLocationAlt
 import androidx.compose.material.icons.filled.Air
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.Close
@@ -90,6 +91,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.captainavi.app.CaptainAviApp
+import com.captainavi.app.data.local.entity.TripStatus
 import com.captainavi.app.data.local.entity.WaypointEntity
 import com.captainavi.app.data.local.entity.WaypointType
 import com.captainavi.app.data.repository.IslandPlace
@@ -105,6 +107,8 @@ import com.captainavi.app.data.remote.FollowMePublicBoatProfile
 import com.captainavi.app.data.remote.StartTripRequest
 import com.captainavi.app.data.repository.searchMarineActivityPoints
 import com.captainavi.app.data.repository.searchIslandPlaces
+import com.captainavi.app.data.repository.summarizeTargetSpecies
+import com.captainavi.app.data.repository.targetSpecies
 import com.captainavi.app.localization.LanguageManager
 import com.captainavi.app.safety.AnchorWatchManager
 import com.captainavi.app.safety.NauticalMath
@@ -114,6 +118,8 @@ import com.captainavi.app.service.DestinationState
 import com.captainavi.app.service.MarineLocationService
 import com.captainavi.app.service.NavigationDestination
 import com.captainavi.app.service.SavedTraceState
+import com.captainavi.app.ui.screens.trips.LogCatchAtFishSpotDialog
+import com.captainavi.app.ui.screens.waypoints.AddWaypointDialog
 import com.captainavi.app.ui.theme.MarineTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -229,6 +235,14 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
     var isDownloading by remember { mutableStateOf(false) }
     var downloadHarbourDetail by rememberSaveable { mutableStateOf(false) }
     var showMoreChartTools by rememberSaveable { mutableStateOf(false) }
+    var markPlacementMode by remember { mutableStateOf(false) }
+    var showAddMarkDialog by remember { mutableStateOf(false) }
+    var pendingMarkLat by remember { mutableStateOf(0.0) }
+    var pendingMarkLon by remember { mutableStateOf(0.0) }
+    var mapWaypointActions by remember { mutableStateOf<WaypointEntity?>(null) }
+    var editingMapWaypoint by remember { mutableStateOf<WaypointEntity?>(null) }
+    var editingMapConvertToFish by remember { mutableStateOf(false) }
+    var loggingCatchWaypoint by remember { mutableStateOf<WaypointEntity?>(null) }
     var traceControlBusy by remember { mutableStateOf(false) }
     var traceClockMillis by remember { mutableLongStateOf(System.currentTimeMillis()) }
 
@@ -289,6 +303,41 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
             sourceMaxZoom = source.maximumZoomLevel,
         )
         showMapSourcePicker = false
+    }
+
+    fun openMarkDialogAt(lat: Double, lon: Double) {
+        pendingMarkLat = lat
+        pendingMarkLon = lon
+        markPlacementMode = false
+        mapRuntime.markPlacementActive = false
+        showAddMarkDialog = true
+    }
+
+    fun toggleMarkPlacementMode() {
+        if (markPlacementMode) {
+            markPlacementMode = false
+            mapRuntime.markPlacementActive = false
+            Toast.makeText(context, "Mark mode off", Toast.LENGTH_SHORT).show()
+            return
+        }
+        markPlacementMode = true
+        mapRuntime.markPlacementActive = true
+        Toast.makeText(context, "Tap chart to place mark", Toast.LENGTH_SHORT).show()
+    }
+
+    DisposableEffect(Unit) {
+        mapRuntime.onMapSingleTap = { point ->
+            if (!mapRuntime.markPlacementActive) {
+                false
+            } else {
+                openMarkDialogAt(point.latitude, point.longitude)
+                true
+            }
+        }
+        onDispose {
+            mapRuntime.onMapSingleTap = null
+            mapRuntime.markPlacementActive = false
+        }
     }
 
     fun focusIsland(island: IslandPlace) {
@@ -693,6 +742,177 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
 
     if (showFleetRadar) {
         FleetRadarDialog(onDismiss = { showFleetRadar = false })
+    }
+
+    if (showAddMarkDialog) {
+        AddWaypointDialog(
+            initialLat = pendingMarkLat,
+            initialLon = pendingMarkLon,
+            onSave = { name, type, lat, lon, desc, targetSpecies ->
+                scope.launch {
+                    app.waypointRepository.addWaypoint(
+                        name = name,
+                        type = type,
+                        latitude = lat,
+                        longitude = lon,
+                        description = desc,
+                        targetSpecies = targetSpecies,
+                    )
+                    Toast.makeText(context, "Mark saved", Toast.LENGTH_SHORT).show()
+                }
+            },
+            onDismiss = {
+                showAddMarkDialog = false
+                markPlacementMode = false
+            },
+        )
+    }
+
+    editingMapWaypoint?.let { waypoint ->
+        AddWaypointDialog(
+            initialLat = waypoint.latitude,
+            initialLon = waypoint.longitude,
+            existing = waypoint,
+            convertToFishSpot = editingMapConvertToFish,
+            onSave = { name, type, lat, lon, desc, targetSpecies ->
+                scope.launch {
+                    app.waypointRepository.updateWaypointDetails(
+                        waypoint = waypoint,
+                        name = name,
+                        type = type,
+                        latitude = lat,
+                        longitude = lon,
+                        description = desc,
+                        targetSpecies = targetSpecies,
+                    )
+                    Toast.makeText(
+                        context,
+                        if (type == WaypointType.FISHING_SPOT && waypoint.type != WaypointType.FISHING_SPOT) {
+                            "Converted to fish spot"
+                        } else {
+                            "Mark updated"
+                        },
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            },
+            onDismiss = {
+                editingMapWaypoint = null
+                editingMapConvertToFish = false
+            },
+        )
+    }
+
+    loggingCatchWaypoint?.let { waypoint ->
+        val trip = activeTrip
+        if (trip != null && trip.status == TripStatus.ACTIVE) {
+            LogCatchAtFishSpotDialog(
+                waypoint = waypoint,
+                tripId = trip.id,
+                onDismiss = { loggingCatchWaypoint = null },
+            )
+        }
+    }
+
+    mapWaypointActions?.let { waypoint ->
+        val dialogColors = MarineTheme.colors
+        val isFish = waypoint.type == WaypointType.FISHING_SPOT
+        val canConvert = waypoint.type == WaypointType.HARBOUR ||
+            waypoint.type == WaypointType.DANGER_REEF ||
+            waypoint.type == WaypointType.HOME
+        val spotSpecies = waypoint.targetSpecies()
+        val speciesHint = summarizeTargetSpecies(spotSpecies, limit = 3)
+        val typeLabel = when (waypoint.type) {
+            WaypointType.HOME -> "Home"
+            WaypointType.HARBOUR -> "Harbour"
+            WaypointType.FISHING_SPOT -> "Fish spot"
+            WaypointType.DANGER_REEF -> "Danger reef"
+        }
+        val tripActive = activeTrip?.status == TripStatus.ACTIVE
+        AlertDialog(
+            onDismissRequest = { mapWaypointActions = null },
+            title = { Text(waypoint.name) },
+            text = {
+                Text(
+                    when {
+                        isFish && speciesHint.isNotBlank() -> "Catch: $speciesHint"
+                        isFish -> "No fish set yet — edit the spot first"
+                        canConvert -> "$typeLabel · convert to fish spot to set species"
+                        else -> typeLabel
+                    },
+                    color = dialogColors.textSecondary,
+                )
+            },
+            confirmButton = {
+                if (isFish) {
+                    TextButton(
+                        onClick = {
+                            when {
+                                !tripActive -> {
+                                    Toast.makeText(
+                                        context,
+                                        "Start a fishing trip on Helm to log catch",
+                                        Toast.LENGTH_LONG,
+                                    ).show()
+                                }
+                                spotSpecies.isEmpty() -> {
+                                    Toast.makeText(
+                                        context,
+                                        "Set species on this spot first",
+                                        Toast.LENGTH_LONG,
+                                    ).show()
+                                    mapWaypointActions = null
+                                    editingMapConvertToFish = false
+                                    editingMapWaypoint = waypoint
+                                }
+                                else -> {
+                                    mapWaypointActions = null
+                                    loggingCatchWaypoint = waypoint
+                                }
+                            }
+                        },
+                    ) {
+                        Text("Log catch")
+                    }
+                } else {
+                    TextButton(
+                        onClick = {
+                            mapWaypointActions = null
+                            editingMapConvertToFish = canConvert
+                            editingMapWaypoint = waypoint
+                        },
+                    ) {
+                        Text(if (canConvert) "Convert to fish" else "Edit")
+                    }
+                }
+            },
+            dismissButton = {
+                Row {
+                    if (isFish) {
+                        TextButton(
+                            onClick = {
+                                mapWaypointActions = null
+                                editingMapConvertToFish = false
+                                editingMapWaypoint = waypoint
+                            },
+                        ) {
+                            Text("Edit fish")
+                        }
+                    }
+                    TextButton(
+                        onClick = {
+                            DestinationState.lockDestination(waypoint)
+                            mapWaypointActions = null
+                        },
+                    ) {
+                        Text("Navigate")
+                    }
+                    TextButton(onClick = { mapWaypointActions = null }) {
+                        Text("Close")
+                    }
+                }
+            },
+        )
     }
 
     if (showIslandSearch) {
@@ -1488,11 +1708,18 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                     })
                     overlayManager.add(RotationGestureOverlay(this).apply { isEnabled = true })
 
-                    // Long-press to navigate to a point on the map
+                    // Tap to place mark (when mark mode on); long-press to navigate
                     overlayManager.add(MapEventsOverlay(object : MapEventsReceiver {
-                        override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean = false
+                        override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
+                            val handler = mapRuntime.onMapSingleTap
+                            return if (p != null && handler != null) handler(p) else false
+                        }
                         override fun longPressHelper(p: GeoPoint?): Boolean {
                             if (p != null) {
+                                if (mapRuntime.markPlacementActive) {
+                                    mapRuntime.onMapSingleTap?.invoke(p)
+                                    return true
+                                }
                                 MarineLocationService.setDestination(NavigationDestination(
                                     name = "Map (${String.format(java.util.Locale.US, "%.3f", p.latitude)}, ${String.format(java.util.Locale.US, "%.3f", p.longitude)})",
                                     latitude = p.latitude, longitude = p.longitude
@@ -1785,7 +2012,9 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                         context = context,
                         mapView = map,
                         waypoints = waypoints,
-                        onWaypointTap = DestinationState::lockDestination,
+                        onWaypointTap = { wp ->
+                            mapWaypointActions = wp
+                        },
                     )
                     mapRuntime.renderedWaypointList = waypoints
                 }
@@ -1816,6 +2045,42 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                 .padding(horizontal = 12.dp, vertical = 10.dp),
         )
 
+        if (markPlacementMode) {
+            Surface(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(start = 12.dp, end = 12.dp, bottom = 72.dp)
+                    .clickable {
+                        val lat = when {
+                            telemetry.hasGpsFix -> telemetry.latitude
+                            else -> mapRuntime.mapView?.mapCenter?.latitude ?: pendingMarkLat
+                        }
+                        val lon = when {
+                            telemetry.hasGpsFix -> telemetry.longitude
+                            else -> mapRuntime.mapView?.mapCenter?.longitude ?: pendingMarkLon
+                        }
+                        openMarkDialogAt(lat, lon)
+                    },
+                color = colors.caution.copy(alpha = 0.94f),
+                shape = RoundedCornerShape(14.dp),
+                shadowElevation = 8.dp,
+            ) {
+                Column(modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp)) {
+                    Text(
+                        "Tap chart to place mark",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = colors.onAccent,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Text(
+                        if (telemetry.hasGpsFix) "Or tap here to mark boat position" else "Or tap here to mark map center",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = colors.onAccent.copy(alpha = 0.88f),
+                    )
+                }
+            }
+        }
+
         Surface(
             modifier = Modifier
                 .align(Alignment.TopEnd)
@@ -1837,6 +2102,18 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                 contentDescription = "Search islands, fishing FADs, and dive sites"
             ) {
                 Icon(Icons.Default.Search, null)
+            }
+                MapActionButton(
+                onClick = { toggleMarkPlacementMode() },
+                selected = markPlacementMode,
+                selectedColor = colors.caution,
+                contentDescription = if (markPlacementMode) {
+                    "Cancel mark placement"
+                } else {
+                    "Save mark on chart"
+                },
+            ) {
+                Icon(Icons.Default.AddLocationAlt, null)
             }
                 MapActionButton(
                 onClick = {
@@ -2063,6 +2340,9 @@ private class MapRuntimeRefs {
     var anchorCircle: Polygon? = null
     var waypointOverlays: List<Overlay> = emptyList()
     var renderedWaypointList: List<WaypointEntity>? = null
+    /** When true, chart tap/long-press opens the save-mark dialog at that point. */
+    @Volatile var markPlacementActive: Boolean = false
+    var onMapSingleTap: ((GeoPoint) -> Boolean)? = null
 
     fun clear() {
         mapView = null
@@ -2073,6 +2353,7 @@ private class MapRuntimeRefs {
         marineActivityPointsOverlay = null
         islandLabelsOverlay = null
         followMePublicBoatsOverlay = null
+        fishingHotspotOverlay = null
         flowOverlay = null
         fittedTraceTripId = null
         boatMarker = null
@@ -2084,6 +2365,8 @@ private class MapRuntimeRefs {
         anchorCircle = null
         waypointOverlays = emptyList()
         renderedWaypointList = null
+        markPlacementActive = false
+        onMapSingleTap = null
     }
 }
 
@@ -2446,6 +2729,19 @@ private fun MapActionButton(
     }
 }
 
+private fun buildWaypointSnippet(wp: WaypointEntity): String {
+    val species = if (wp.type == WaypointType.FISHING_SPOT) {
+        summarizeTargetSpecies(wp.targetSpecies(), limit = 4)
+    } else {
+        ""
+    }
+    return when {
+        species.isNotBlank() && wp.description.isNotBlank() -> "Catch: $species · ${wp.description}"
+        species.isNotBlank() -> "Catch: $species"
+        else -> wp.description
+    }
+}
+
 private fun buildWaypointOverlays(
     context: Context,
     mapView: MapView,
@@ -2461,6 +2757,10 @@ private fun buildWaypointOverlays(
                 fillPaint.color = AndroidColor.argb(80, 255, 30, 80)
                 outlinePaint.color = AndroidColor.RED; outlinePaint.strokeWidth = 3f
                 title = wp.name; snippet = wp.description
+                setOnClickListener { _, _, _ ->
+                    onWaypointTap(wp)
+                    true
+                }
             }
             mapView.overlayManager.add(circlePolygon); added.add(circlePolygon)
         } else {
@@ -2471,7 +2771,9 @@ private fun buildWaypointOverlays(
                 else -> AndroidColor.WHITE
             }
             val marker = Marker(mapView).apply {
-                position = pos; title = wp.name; snippet = wp.description
+                position = pos
+                title = wp.name
+                snippet = buildWaypointSnippet(wp)
                 icon = createCircleMarker(context, color, 24); setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
                 setOnMarkerClickListener { tappedMarker, _ ->
                     onWaypointTap(wp)

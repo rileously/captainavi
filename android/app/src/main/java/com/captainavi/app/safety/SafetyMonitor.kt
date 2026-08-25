@@ -78,6 +78,31 @@ sealed class SafetyAlertEvent(
             },
             marginLiters < 0,
         )
+
+    class DarkReturnRisk(
+        val afterDark: Boolean,
+        val arrivalMarginMinutes: Double,
+        val etaMinutes: Double,
+        sunsetEpochMillis: Long,
+    ) : SafetyAlertEvent(
+        AlertType.DARK_RETURN,
+        if (afterDark) "RETURN AFTER DARK" else "TIGHT RETURN BEFORE SUNSET",
+        buildString {
+            val clock = java.text.SimpleDateFormat("HH:mm", java.util.Locale.US)
+            val arrivalMillis = sunsetEpochMillis + (arrivalMarginMinutes * 60_000.0).toLong()
+            val etaText = NauticalMath.formatEta(etaMinutes)
+            if (afterDark) {
+                append("ETA home ${clock.format(java.util.Date(arrivalMillis))} ($etaText) is ")
+                append("${"%.0f".format(-arrivalMarginMinutes)} min after sunset ${clock.format(java.util.Date(sunsetEpochMillis))}. ")
+                append("You will be underway in darkness — head back now.")
+            } else {
+                append("ETA home ${clock.format(java.util.Date(arrivalMillis))} ($etaText) leaves only ")
+                append("${"%.0f".format(arrivalMarginMinutes)} min before sunset ${clock.format(java.util.Date(sunsetEpochMillis))}. ")
+                append("Consider heading back soon.")
+            }
+        },
+        afterDark,
+    )
 }
 
 class SafetyMonitor(
@@ -94,6 +119,9 @@ class SafetyMonitor(
     private var lastGpsLostAlertTime: Long = 0L
     private var isLowFuelAlerted: Boolean = false
 
+    /** 0 = no dark-return alert, 1 = tight warned, 2 = after-dark warned (severity ladder). */
+    private var darkReturnSeverity: Int = 0
+
     fun resetTripState() {
         lastMovementTime = System.currentTimeMillis()
         lastBatteryWarningPct = 100
@@ -102,6 +130,7 @@ class SafetyMonitor(
         officialReefAlertState = null
         lastGpsLostAlertTime = 0L
         isLowFuelAlerted = false
+        darkReturnSeverity = 0
     }
 
     suspend fun evaluateSafety(
@@ -119,6 +148,8 @@ class SafetyMonitor(
         distanceTraveledNm: Double,
         tripReferenceDistanceNm: Double,
         tripReferenceFuelLiters: Double,
+        darkReturnWarningEnabled: Boolean,
+        cruiseSpeedKnots: Double,
         onAlertTriggered: (SafetyAlertEvent) -> Unit
     ): SafetyEvaluationResult {
         val now = System.currentTimeMillis()
@@ -282,6 +313,76 @@ class SafetyMonitor(
             }
         }
 
+        // 8. Check dark return — ETA home vs local sunset. Sunset is computed
+        // on-device (no network) at the home position; ETA uses the current speed
+        // while underway and the configured cruise speed while drifting/anchored.
+        if (darkReturnWarningEnabled) {
+            val sunset = home?.let {
+                SolarEventCalculator.sunsetEpochMillis(now, it.latitude, it.longitude)
+            }
+            val darkEval = if (sunset != null && distToHome != null) {
+                DarkReturnEvaluator.evaluate(
+                    nowEpochMillis = now,
+                    sunsetEpochMillis = sunset,
+                    distanceToHomeNm = distToHome,
+                    currentSpeedKnots = speedKnots,
+                    cruiseSpeedKnots = cruiseSpeedKnots,
+                )
+            } else {
+                null
+            }
+            if (darkEval == null) {
+                darkReturnSeverity = 0
+            } else {
+                when (darkEval.state) {
+                    DarkReturnState.AFTER_DARK -> {
+                        if (darkReturnSeverity < 2) {
+                            darkReturnSeverity = 2
+                            val alert = SafetyAlertEvent.DarkReturnRisk(
+                                afterDark = true,
+                                arrivalMarginMinutes = darkEval.arrivalMarginMinutes,
+                                etaMinutes = darkEval.etaMinutes,
+                                sunsetEpochMillis = darkEval.sunsetEpochMillis,
+                            )
+                            alarmManager.playWarningBeep(4)
+                            outboxRepository.recordAlert(
+                                tripId, AlertType.DARK_RETURN, alert.description, latitude, longitude, batteryPct
+                            )
+                            onAlertTriggered(alert)
+                        }
+                    }
+                    DarkReturnState.TIGHT -> {
+                        if (darkReturnSeverity < 1) {
+                            darkReturnSeverity = 1
+                            val alert = SafetyAlertEvent.DarkReturnRisk(
+                                afterDark = false,
+                                arrivalMarginMinutes = darkEval.arrivalMarginMinutes,
+                                etaMinutes = darkEval.etaMinutes,
+                                sunsetEpochMillis = darkEval.sunsetEpochMillis,
+                            )
+                            alarmManager.playWarningBeep(2)
+                            outboxRepository.recordAlert(
+                                tripId, AlertType.DARK_RETURN, alert.description, latitude, longitude, batteryPct
+                            )
+                            onAlertTriggered(alert)
+                        } else if (darkReturnSeverity == 2 &&
+                            darkEval.arrivalMarginMinutes > DARK_RETURN_CRITICAL_RECOVERY_MINUTES
+                        ) {
+                            // De-escalated to merely tight; allow a fresh after-dark alert if it worsens again.
+                            darkReturnSeverity = 1
+                        }
+                    }
+                    DarkReturnState.SAFE -> {
+                        if (darkEval.arrivalMarginMinutes > DARK_RETURN_RECOVERY_MARGIN_MINUTES) {
+                            darkReturnSeverity = 0
+                        }
+                    }
+                }
+            }
+        } else {
+            darkReturnSeverity = 0
+        }
+
         return SafetyEvaluationResult(nearestHazardDistanceMeters = nearestHazardMeters)
     }
 
@@ -289,6 +390,15 @@ class SafetyMonitor(
         val reefId: String,
         val wasInside: Boolean,
     )
+
+    companion object {
+        /** Re-arm dark-return alerts once arrival margin recovers beyond this (min before sunset). */
+        private const val DARK_RETURN_RECOVERY_MARGIN_MINUTES =
+            DarkReturnEvaluator.DEFAULT_MARGIN_MINUTES + 15.0
+
+        /** Drop from after-dark back to tight once arrival is again this many minutes before sunset. */
+        private const val DARK_RETURN_CRITICAL_RECOVERY_MINUTES = 10.0
+    }
 }
 
 /**

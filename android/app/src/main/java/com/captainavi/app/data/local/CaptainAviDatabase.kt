@@ -8,11 +8,13 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.captainavi.app.data.local.dao.AlertEventDao
 import com.captainavi.app.data.local.dao.BreadcrumbDao
+import com.captainavi.app.data.local.dao.CatchLogDao
 import com.captainavi.app.data.local.dao.OutgoingEventDao
 import com.captainavi.app.data.local.dao.TripDao
 import com.captainavi.app.data.local.dao.WaypointDao
 import com.captainavi.app.data.local.entity.AlertEventEntity
 import com.captainavi.app.data.local.entity.BreadcrumbEntity
+import com.captainavi.app.data.local.entity.CatchLogEntity
 import com.captainavi.app.data.local.entity.OutgoingEventEntity
 import com.captainavi.app.data.local.entity.TripEntity
 import com.captainavi.app.data.local.entity.WaypointEntity
@@ -28,8 +30,9 @@ import kotlinx.coroutines.launch
         WaypointEntity::class,
         AlertEventEntity::class,
         OutgoingEventEntity::class,
+        CatchLogEntity::class,
     ],
-    version = 3,
+    version = 6,
     exportSchema = false
 )
 abstract class CaptainAviDatabase : RoomDatabase() {
@@ -38,6 +41,7 @@ abstract class CaptainAviDatabase : RoomDatabase() {
     abstract fun waypointDao(): WaypointDao
     abstract fun alertEventDao(): AlertEventDao
     abstract fun outgoingEventDao(): OutgoingEventDao
+    abstract fun catchLogDao(): CatchLogDao
 
     companion object {
         @Volatile
@@ -50,7 +54,7 @@ abstract class CaptainAviDatabase : RoomDatabase() {
                     CaptainAviDatabase::class.java,
                     "captain_avi.db"
                 )
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                     .addCallback(DatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
@@ -171,6 +175,50 @@ abstract class CaptainAviDatabase : RoomDatabase() {
                 )
                 db.execSQL(
                     "CREATE INDEX IF NOT EXISTS index_outgoing_events_timestamp ON outgoing_events (timestamp)",
+                )
+            }
+        }
+
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS catch_logs (
+                        id TEXT NOT NULL PRIMARY KEY,
+                        tripId TEXT NOT NULL,
+                        species TEXT NOT NULL,
+                        count INTEGER NOT NULL,
+                        notes TEXT NOT NULL,
+                        latitude REAL,
+                        longitude REAL,
+                        timestamp INTEGER NOT NULL
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_catch_logs_tripId ON catch_logs (tripId)",
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_catch_logs_timestamp ON catch_logs (timestamp)",
+                )
+            }
+        }
+
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "ALTER TABLE catch_logs ADD COLUMN habitat TEXT NOT NULL DEFAULT 'OTHER'",
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_catch_logs_habitat ON catch_logs (habitat)",
+                )
+            }
+        }
+
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "ALTER TABLE waypoints ADD COLUMN targetSpeciesJson TEXT NOT NULL DEFAULT '[]'",
                 )
             }
         }

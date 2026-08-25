@@ -6,6 +6,7 @@ import com.captainavi.app.data.local.CaptainAviDatabase
 import com.captainavi.app.data.remote.RelayApiClient
 import com.captainavi.app.data.remote.FollowMePublicClient
 import com.captainavi.app.data.remote.RtlMarineRouteClient
+import com.captainavi.app.data.repository.CatchLogRepository
 import com.captainavi.app.data.repository.FollowMePublicBoatRepository
 import com.captainavi.app.data.repository.MarineConditionsRepository
 import com.captainavi.app.data.repository.MarineActivityPointRepository
@@ -53,6 +54,7 @@ class CaptainAviApp : Application() {
     }
 
     val tripRepository by lazy { TripRepository(database.tripDao(), database.breadcrumbDao()) }
+    val catchLogRepository by lazy { CatchLogRepository(database.catchLogDao()) }
     val waypointRepository by lazy { WaypointRepository(database.waypointDao()) }
     val outboxRepository by lazy {
         OutboxRepository(

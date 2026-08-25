@@ -26,6 +26,7 @@ import com.captainavi.app.ui.screens.dashboard.DashboardScreen
 import com.captainavi.app.ui.screens.map.OfflineMapScreen
 import com.captainavi.app.ui.screens.settings.SettingsScreen
 import com.captainavi.app.ui.screens.tides.MarineDataScreen
+import com.captainavi.app.ui.screens.trips.CatchLogScreen
 import com.captainavi.app.ui.screens.trips.TripHistoryScreen
 import com.captainavi.app.ui.screens.waypoints.WaypointsScreen
 import com.captainavi.app.service.SavedTraceState
@@ -35,12 +36,14 @@ import com.captainavi.app.ui.theme.MarineTheme
 fun CaptainAviNavigation() {
     val navController = rememberNavController()
     val colors = MarineTheme.colors
+    // Footer includes Catch as a full page (no modal). Six tabs on purpose.
     val items = listOf(
         Screen.Dashboard,
         Screen.Map,
+        Screen.Catch,
         Screen.Tides,
         Screen.Waypoints,
-        Screen.History
+        Screen.History,
     )
 
     Scaffold(
@@ -110,10 +113,24 @@ fun CaptainAviNavigation() {
                     onNavigateToMap = { navController.navigate(Screen.Map.route) },
                     onNavigateToTides = { navController.navigate(Screen.Tides.route) },
                     onNavigateToSettings = { navController.navigate(Screen.Settings.route) },
+                    onNavigateToCatch = { navController.navigate(Screen.Catch.route) },
                 )
             }
             composable(Screen.Map.route) {
                 OfflineMapScreen()
+            }
+            composable(Screen.Catch.route) {
+                CatchLogScreen(
+                    onStartTripHint = {
+                        navController.navigate(Screen.Dashboard.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                )
             }
             composable(Screen.Tides.route) {
                 MarineDataScreen(
@@ -134,7 +151,12 @@ fun CaptainAviNavigation() {
                             launchSingleTop = true
                             restoreState = true
                         }
-                    }
+                    },
+                    onLogCatch = {
+                        navController.navigate(Screen.Catch.route) {
+                            launchSingleTop = true
+                        }
+                    },
                 )
             }
             composable(Screen.Settings.route) {

@@ -539,6 +539,8 @@ class MarineLocationService : Service() {
                     distanceTraveledNm = tripDistanceTraveledNm,
                     tripReferenceDistanceNm = settings.tripReferenceDistanceNm.value,
                     tripReferenceFuelLiters = settings.tripReferenceFuelLiters.value,
+                    darkReturnWarningEnabled = settings.darkReturnWarningEnabled.value,
+                    cruiseSpeedKnots = settings.cruiseSpeedKnots.value,
                 ) { alertEvent ->
                     _telemetry.value = _telemetry.value.copy(activeSafetyAlert = alertEvent)
                     ConnectivitySyncWorker.enqueueImmediateSync(this@MarineLocationService)

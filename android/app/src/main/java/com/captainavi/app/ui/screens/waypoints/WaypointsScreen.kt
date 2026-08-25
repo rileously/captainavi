@@ -22,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.NearMe
 import androidx.compose.material.icons.filled.SortByAlpha
@@ -48,6 +49,8 @@ import androidx.compose.ui.unit.dp
 import com.captainavi.app.CaptainAviApp
 import com.captainavi.app.data.local.entity.WaypointEntity
 import com.captainavi.app.data.local.entity.WaypointType
+import com.captainavi.app.data.repository.summarizeTargetSpecies
+import com.captainavi.app.data.repository.targetSpecies
 import com.captainavi.app.safety.NauticalMath
 import com.captainavi.app.service.DestinationState
 import com.captainavi.app.service.MarineLocationService
@@ -68,6 +71,8 @@ fun WaypointsScreen(
     val destination by DestinationState.destination.collectAsState()
     val colors = MarineTheme.colors
     var showAddDialog by remember { mutableStateOf(false) }
+    var editingWaypoint by remember { mutableStateOf<WaypointEntity?>(null) }
+    var editingConvertToFish by remember { mutableStateOf(false) }
     var sortByNearest by remember { mutableStateOf(false) }
     val sortedWaypoints = remember(waypoints, sortByNearest, telemetry.hasGpsFix, telemetry.latitude, telemetry.longitude) {
         if (sortByNearest && telemetry.hasGpsFix) {
@@ -81,18 +86,45 @@ fun WaypointsScreen(
         AddWaypointDialog(
             initialLat = telemetry.latitude,
             initialLon = telemetry.longitude,
-            onSave = { name, type, lat, lon, desc ->
+            onSave = { name, type, lat, lon, desc, targetSpecies ->
                 scope.launch {
                     app.waypointRepository.addWaypoint(
                         name = name,
                         type = type,
                         latitude = lat,
                         longitude = lon,
-                        description = desc
+                        description = desc,
+                        targetSpecies = targetSpecies,
                     )
                 }
             },
             onDismiss = { showAddDialog = false }
+        )
+    }
+
+    editingWaypoint?.let { waypoint ->
+        AddWaypointDialog(
+            initialLat = waypoint.latitude,
+            initialLon = waypoint.longitude,
+            existing = waypoint,
+            convertToFishSpot = editingConvertToFish,
+            onSave = { name, type, lat, lon, desc, targetSpecies ->
+                scope.launch {
+                    app.waypointRepository.updateWaypointDetails(
+                        waypoint = waypoint,
+                        name = name,
+                        type = type,
+                        latitude = lat,
+                        longitude = lon,
+                        description = desc,
+                        targetSpecies = targetSpecies,
+                    )
+                }
+            },
+            onDismiss = {
+                editingWaypoint = null
+                editingConvertToFish = false
+            },
         )
     }
 
@@ -204,6 +236,14 @@ fun WaypointsScreen(
                                     DestinationState.lockDestination(waypoint)
                                 }
                             },
+                            onEdit = {
+                                editingConvertToFish = false
+                                editingWaypoint = waypoint
+                            },
+                            onConvertToFish = {
+                                editingConvertToFish = true
+                                editingWaypoint = waypoint
+                            },
                             onDelete = {
                                 scope.launch { app.waypointRepository.deleteWaypoint(waypoint) }
                             }
@@ -266,15 +306,20 @@ fun WaypointCard(
     boatLon: Double,
     isDestination: Boolean,
     onToggleNavigate: () -> Unit,
+    onEdit: () -> Unit,
+    onConvertToFish: () -> Unit,
     onDelete: () -> Unit
 ) {
     val colors = MarineTheme.colors
     val (typeColor, typeLabel) = when (waypoint.type) {
         WaypointType.HOME -> colors.home to "Home"
         WaypointType.HARBOUR -> colors.accent to "Harbour"
-        WaypointType.FISHING_SPOT -> colors.caution to "Fishing mark"
+        WaypointType.FISHING_SPOT -> colors.caution to "Fish spot"
         WaypointType.DANGER_REEF -> colors.reef to "Danger reef"
     }
+    val canConvert = waypoint.type == WaypointType.HARBOUR || waypoint.type == WaypointType.DANGER_REEF
+    val spotSpecies = waypoint.targetSpecies()
+    val speciesSummary = summarizeTargetSpecies(spotSpecies, limit = 4)
 
     val distanceNm = if (boatLat != 0.0) {
         NauticalMath.distanceNauticalMiles(boatLat, boatLon, waypoint.latitude, waypoint.longitude)
@@ -285,7 +330,9 @@ fun WaypointCard(
     } else 0
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onEdit),
         colors = CardDefaults.cardColors(containerColor = colors.card),
         shape = RoundedCornerShape(10.dp),
         border = androidx.compose.foundation.BorderStroke(1.dp, colors.border)
@@ -313,6 +360,24 @@ fun WaypointCard(
                     style = MaterialTheme.typography.labelMedium,
                     color = colors.textMuted
                 )
+                if (waypoint.type == WaypointType.FISHING_SPOT) {
+                    Text(
+                        text = if (speciesSummary.isNotBlank()) {
+                            "Catch: $speciesSummary · tap to edit"
+                        } else {
+                            "No fish set · tap to edit"
+                        },
+                        style = MaterialTheme.typography.labelMedium,
+                        color = colors.caution,
+                    )
+                } else if (canConvert) {
+                    Text(
+                        text = "Convert to fish spot + species",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = colors.caution,
+                        modifier = Modifier.clickable(onClick = onConvertToFish),
+                    )
+                }
                 if (waypoint.description.isNotBlank()) {
                     Text(
                         text = waypoint.description,
@@ -338,6 +403,17 @@ fun WaypointCard(
                     color = colors.textSecondary
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(
+                        onClick = onEdit,
+                        modifier = Modifier.size(28.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.Edit,
+                            "Edit mark",
+                            tint = if (waypoint.type == WaypointType.FISHING_SPOT) colors.caution else colors.textMuted,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
                     IconButton(
                         onClick = onToggleNavigate,
                         modifier = Modifier.size(28.dp)
