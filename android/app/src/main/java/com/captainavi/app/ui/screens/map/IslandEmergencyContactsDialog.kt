@@ -81,7 +81,7 @@ internal fun IslandEmergencyContactsDialog(
                         append(String.format(java.util.Locale.US, "%.4f°, %.4f°", island.latitude, island.longitude))
                     },
                     style = MaterialTheme.typography.bodySmall,
-                    color = colors.textSecondary,
+                    color = islandCategoryAccent(island.category),
                 )
                 Text(
                     "Call opens your phone app with the number ready. The app never starts a call automatically.",
@@ -152,6 +152,10 @@ internal fun IslandEmergencyContactsDialog(
         shape = RoundedCornerShape(12.dp),
     )
 }
+
+/** Compose accent matching map tooltip colors for inhabited vs other islands. */
+internal fun islandCategoryAccent(category: String): Color =
+    Color(islandLabelStyle(category).dotColor)
 
 @Composable
 private fun EmergencyContactCard(

@@ -38,14 +38,13 @@ class IslandLabelsOverlay(context: Context) : Overlay() {
         textSize = 11f * density
     }
     private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.argb(205, 6, 28, 45)
         style = Paint.Style.FILL
     }
-    private val selectedBackgroundPaint = Paint(backgroundPaint).apply {
+    private val selectedBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.argb(235, 117, 78, 12)
+        style = Paint.Style.FILL
     }
     private val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.rgb(46, 211, 225)
         style = Paint.Style.FILL
     }
 
@@ -127,6 +126,8 @@ class IslandLabelsOverlay(context: Context) : Overlay() {
                 centerY = screenPoint.y.toFloat(),
             )
 
+            val style = islandLabelStyle(island.category)
+            dotPaint.color = style.dotColor
             canvas.drawCircle(mapPoint.x.toFloat(), mapPoint.y.toFloat(), 3f * density, dotPaint)
             if (labelCulled) return@forEach
 
@@ -147,8 +148,15 @@ class IslandLabelsOverlay(context: Context) : Overlay() {
                 mapPoint.y.toFloat(),
             )
             try {
-                canvas.drawRoundRect(rect, 6f * density, 6f * density,
-                    if (isSelected) selectedBackgroundPaint else backgroundPaint)
+                backgroundPaint.color = style.backgroundColor
+                titlePaint.color = style.titleColor
+                dhivehiPaint.color = style.dhivehiColor
+                canvas.drawRoundRect(
+                    rect,
+                    6f * density,
+                    6f * density,
+                    if (isSelected) selectedBackgroundPaint else backgroundPaint,
+                )
                 val titleBaseline = rect.top + topPadding - titlePaint.fontMetrics.top
                 canvas.drawText(island.englishName, rect.centerX(), titleBaseline, titlePaint)
                 if (hasDhivehi) {
@@ -218,6 +226,50 @@ private data class IslandLabelHitTarget(
 )
 
 internal fun counterRotationForMap(mapOrientation: Float): Float = -mapOrientation
+
+/**
+ * Category colors for island name "tooltip" pills.
+ * Inhabited (Residential) islands use a distinct green so they read clearly
+ * against tourism / uninhabited labels on the chart.
+ */
+internal data class IslandLabelStyle(
+    val backgroundColor: Int,
+    val titleColor: Int,
+    val dhivehiColor: Int,
+    val dotColor: Int,
+)
+
+internal fun islandLabelStyle(category: String): IslandLabelStyle = when (category) {
+    "Residential Island" -> IslandLabelStyle(
+        backgroundColor = argb(230, 8, 78, 52),
+        titleColor = argb(255, 255, 255, 255),
+        dhivehiColor = argb(255, 170, 245, 205),
+        dotColor = argb(255, 46, 210, 130),
+    )
+    "Tourism Island" -> IslandLabelStyle(
+        backgroundColor = argb(215, 72, 38, 12),
+        titleColor = argb(255, 255, 255, 255),
+        dhivehiColor = argb(255, 255, 210, 160),
+        dotColor = argb(255, 255, 168, 72),
+    )
+    "Industrial Island", "Institutional Island" -> IslandLabelStyle(
+        backgroundColor = argb(215, 48, 42, 18),
+        titleColor = argb(255, 255, 255, 255),
+        dhivehiColor = argb(255, 235, 220, 150),
+        dotColor = argb(255, 210, 175, 70),
+    )
+    else -> IslandLabelStyle(
+        // Uninhabited / unknown — muted slate cyan (previous default look)
+        backgroundColor = argb(205, 6, 28, 45),
+        titleColor = argb(255, 255, 255, 255),
+        dhivehiColor = argb(255, 185, 235, 245),
+        dotColor = argb(255, 46, 211, 225),
+    )
+}
+
+/** Pack ARGB without android.graphics.Color so unit tests stay JVM-safe. */
+internal fun argb(a: Int, r: Int, g: Int, b: Int): Int =
+    (a and 0xff shl 24) or (r and 0xff shl 16) or (g and 0xff shl 8) or (b and 0xff)
 
 internal fun maxIslandTapDistanceMeters(zoom: Double): Double = when {
     zoom >= 14.0 -> 450.0

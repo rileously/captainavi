@@ -60,6 +60,29 @@ class IslandLabelsOverlayTest {
         assertNull(hit)
     }
 
+    @Test
+    fun `inhabited residential tooltips use distinct green`() {
+        val residential = islandLabelStyle("Residential Island")
+        val uninhabited = islandLabelStyle("Uninhabited Island")
+        val tourism = islandLabelStyle("Tourism Island")
+        assertTrue(residential.backgroundColor != uninhabited.backgroundColor)
+        assertTrue(residential.dotColor != uninhabited.dotColor)
+        assertTrue(residential.dotColor != tourism.dotColor)
+        // Green channel should dominate for inhabited markers
+        val r = (residential.dotColor shr 16) and 0xff
+        val g = (residential.dotColor shr 8) and 0xff
+        val b = residential.dotColor and 0xff
+        assertTrue(g > r && g > b)
+    }
+
+    @Test
+    fun `tourism and uninhabited keep separate tooltip colors`() {
+        assertTrue(
+            islandLabelStyle("Tourism Island").backgroundColor !=
+                islandLabelStyle("Uninhabited Island").backgroundColor,
+        )
+    }
+
     private fun sampleIsland(id: Int, name: String, lat: Double, lon: Double) = IslandPlace(
         id = id,
         englishName = name,

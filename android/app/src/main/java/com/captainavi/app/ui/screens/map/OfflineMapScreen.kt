@@ -854,7 +854,7 @@ fun OfflineMapScreen(modifier: Modifier = Modifier) {
                                     Text(
                                         "${island.atoll} · ${island.category.removeSuffix(" Island")}",
                                         style = MaterialTheme.typography.labelSmall,
-                                        color = colors.textSecondary,
+                                        color = islandCategoryAccent(island.category),
                                     )
                                 }
                             }
