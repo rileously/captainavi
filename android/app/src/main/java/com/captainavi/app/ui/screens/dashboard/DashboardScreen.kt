@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.PersonOff
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material.icons.filled.SystemUpdate
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
@@ -304,6 +305,35 @@ fun DashboardScreen(
                     Column {
                         Text(alert.title, style = MaterialTheme.typography.titleSmall, color = colors.emergency)
                         Text(alert.description, style = MaterialTheme.typography.bodySmall, color = colors.textPrimary)
+                    }
+                }
+            }
+
+            val updateState by app.appUpdateManager.state.collectAsState()
+            val availableUpdate = updateState as? com.captainavi.app.update.AppUpdateUiState.Available
+            if (availableUpdate != null) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(colors.caution.copy(alpha = 0.14f), RoundedCornerShape(10.dp))
+                        .border(1.dp, colors.caution.copy(alpha = 0.7f), RoundedCornerShape(10.dp))
+                        .clickable { onNavigateToSettings() }
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(Icons.Default.SystemUpdate, contentDescription = null, tint = colors.caution, modifier = Modifier.size(22.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            "Update ${availableUpdate.update.versionName} available",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = colors.caution,
+                        )
+                        Text(
+                            "Open Settings to download and install",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = colors.textSecondary,
+                        )
                     }
                 }
             }

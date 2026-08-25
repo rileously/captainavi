@@ -59,6 +59,7 @@ import com.captainavi.app.localization.LanguageManager
 import com.captainavi.app.safety.FuelMarginCalculator
 import com.captainavi.app.safety.StormAlertEvaluator
 import com.captainavi.app.sms.OfflineSmsRules
+import com.captainavi.app.ui.components.AppUpdateCard
 import com.captainavi.app.ui.components.ScreenHeader
 import com.captainavi.app.ui.components.marineTextFieldColors
 import com.captainavi.app.ui.theme.MarineTheme
@@ -172,6 +173,8 @@ fun SettingsScreen(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         ScreenHeader(title = "Configuration")
+
+        AppUpdateCard()
 
         saveToast?.let { (success, msg) ->
             Text(

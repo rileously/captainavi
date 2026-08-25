@@ -24,6 +24,7 @@ import com.captainavi.app.sms.OfflineSmsLocationStore
 import com.captainavi.app.sms.OfflineSmsMessenger
 import com.captainavi.app.tides.TidePredictionAssets
 import com.captainavi.app.ui.theme.NightModeState
+import com.captainavi.app.update.AppUpdateManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -82,6 +83,7 @@ class CaptainAviApp : Application() {
         IslandGazetteerRepository(this, isOnline = networkMonitor::isCurrentlyOnline)
     }
     val reefBoundaryRepository by lazy { ReefBoundaryRepository(this) }
+    val appUpdateManager by lazy { AppUpdateManager(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -99,6 +101,12 @@ class CaptainAviApp : Application() {
         TidePredictionAssets.install(this)
         ConnectivitySyncWorker.schedulePeriodicSync(this)
         StormAlertWorker.schedulePeriodicCheck(this)
+        applicationScope.launch {
+            delay(4_000)
+            if (networkMonitor.isCurrentlyOnline()) {
+                runCatching { appUpdateManager.checkForUpdate(force = false) }
+            }
+        }
         if (settingsRepository.rtlMarineRoutesEnabled.value) {
             applicationScope.launch {
                 delay(2_500)
