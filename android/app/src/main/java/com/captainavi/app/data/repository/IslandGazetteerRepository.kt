@@ -189,9 +189,9 @@ fun searchIslandPlaces(
 }
 
 fun IslandPlace.shouldShowLabelAtZoom(zoom: Double): Boolean = when {
-    zoom >= 11.0 -> true
-    zoom >= 9.0 -> isCapital || category == "Residential Island"
-    zoom >= 7.5 -> isCapital
+    zoom >= 10.0 -> true
+    zoom >= 8.5 -> isCapital || category == "Residential Island"
+    zoom >= 7.0 -> isCapital
     else -> false
 }
 

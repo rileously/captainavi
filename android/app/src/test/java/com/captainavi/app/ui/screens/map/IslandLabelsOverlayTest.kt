@@ -25,8 +25,8 @@ class IslandLabelsOverlayTest {
 
     @Test
     fun `tap distance widens at lower zoom and disables below label zoom`() {
-        assertEquals(0.0, maxIslandTapDistanceMeters(7.0), 0.0)
-        assertTrue(maxIslandTapDistanceMeters(8.0) > 0.0)
+        assertEquals(0.0, maxIslandTapDistanceMeters(6.9), 0.0)
+        assertTrue(maxIslandTapDistanceMeters(7.0) > 0.0)
         assertTrue(maxIslandTapDistanceMeters(14.0) < maxIslandTapDistanceMeters(9.0))
     }
 

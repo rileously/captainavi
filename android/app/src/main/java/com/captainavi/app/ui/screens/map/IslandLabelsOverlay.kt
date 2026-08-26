@@ -51,7 +51,7 @@ class IslandLabelsOverlay(context: Context) : Overlay() {
     override fun draw(canvas: Canvas, mapView: MapView, shadow: Boolean) {
         if (shadow) return
         val zoom = mapView.zoomLevelDouble
-        if (zoom < 7.5 || islands.isEmpty()) {
+        if (zoom < 7.0 || islands.isEmpty()) {
             hitTargets = emptyList()
             return
         }
@@ -276,7 +276,7 @@ internal fun maxIslandTapDistanceMeters(zoom: Double): Double = when {
     zoom >= 12.0 -> 900.0
     zoom >= 10.0 -> 1_800.0
     zoom >= 8.5 -> 3_200.0
-    zoom >= 7.5 -> 5_000.0
+    zoom >= 7.0 -> 5_000.0
     else -> 0.0
 }
 
